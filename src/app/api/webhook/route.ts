@@ -34,8 +34,10 @@ export async function POST(req: NextRequest) {
     const customerData = {
       name: metadata.name,
       email: metadata.email,
-      phone: "",
-      company: "",
+      businessType: metadata.businessType || "",
+      revenue: metadata.revenue || "",
+      situation: metadata.situation || "",
+      question: metadata.question || "",
       paymentStatus: "completed",
       stripeSessionId: session.id,
       appliedAt: now,
@@ -46,6 +48,10 @@ export async function POST(req: NextRequest) {
       appendToSheet([
         customerData.name,
         customerData.email,
+        customerData.businessType,
+        customerData.revenue,
+        customerData.situation,
+        customerData.question,
         customerData.paymentStatus,
         customerData.stripeSessionId,
         customerData.appliedAt,

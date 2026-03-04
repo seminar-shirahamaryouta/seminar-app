@@ -5,8 +5,10 @@ const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME || "申込者";
 interface CustomerRecord {
   name: string;
   email: string;
-  phone: string;
-  company: string;
+  businessType: string;
+  revenue: string;
+  situation: string;
+  question: string;
   paymentStatus: string;
   stripeSessionId: string;
   appliedAt: string;
@@ -27,8 +29,10 @@ export async function addAirtableRecord(record: CustomerRecord) {
           fields: {
             名前: record.name,
             メール: record.email,
-            電話番号: record.phone,
-            会社名: record.company,
+            ビジネス形態: record.businessType,
+            年商規模: record.revenue,
+            現在の状況: record.situation,
+            当日の質問: record.question,
             決済ステータス: record.paymentStatus,
             StripeセッションID: record.stripeSessionId,
             申込日時: record.appliedAt,

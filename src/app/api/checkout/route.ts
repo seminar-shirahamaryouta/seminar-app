@@ -4,11 +4,12 @@ import { SEMINAR_CONFIG } from "@/lib/seminar-config";
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email } = await req.json();
+    const { name, email, businessType, revenue, situation, question } =
+      await req.json();
 
-    if (!name || !email) {
+    if (!name || !email || !businessType || !revenue || !situation) {
       return NextResponse.json(
-        { error: "名前とメールアドレスは必須です" },
+        { error: "必須項目を入力してください" },
         { status: 400 }
       );
     }
@@ -36,6 +37,10 @@ export async function POST(req: NextRequest) {
       metadata: {
         name,
         email,
+        businessType,
+        revenue,
+        situation,
+        question: question || "",
       },
     });
 
