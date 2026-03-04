@@ -27,7 +27,9 @@ export default function Home() {
             <p>これからは、経済格差という話ではありません。</p>
             <p>「伸びる人」と「停滞する人」に分かれるのではない。</p>
             <p>
-              <span className="text-white font-medium">「残る人」と「消える人」</span>
+              <span className="text-white font-medium">
+                「残る人」と「消える人」
+              </span>
               に分かれます。
             </p>
           </div>
@@ -51,30 +53,30 @@ export default function Home() {
             <p>それが問われています。</p>
           </div>
 
-          <p>
-            現状に留まれば、どれだけ努力しても市場に飲み込まれます。
-          </p>
+          <p>現状に留まれば、どれだけ努力しても市場に飲み込まれます。</p>
 
           {/* Divider */}
           <div className="border-t border-neutral-800 my-12" />
 
-          <div className="space-y-1">
-            <p>今回の特別セミナーでは、</p>
-          </div>
+          <p>今回の特別セミナーでは、</p>
 
           <ul className="space-y-3 pl-1">
             <li className="flex gap-3">
               <span className="text-neutral-600 shrink-0">—</span>
               <span>
                 いま何が起きているのか
-                <span className="text-neutral-500 text-sm ml-2">（構造理解）</span>
+                <span className="text-neutral-500 text-sm ml-2">
+                  （構造理解）
+                </span>
               </span>
             </li>
             <li className="flex gap-3">
               <span className="text-neutral-600 shrink-0">—</span>
               <span>
                 どのポジションを取るべきか
-                <span className="text-neutral-500 text-sm ml-2">（戦略判断）</span>
+                <span className="text-neutral-500 text-sm ml-2">
+                  （戦略判断）
+                </span>
               </span>
             </li>
             <li className="flex gap-3">
@@ -136,9 +138,7 @@ export default function Home() {
               <dt className="text-neutral-500 w-32 shrink-0 mb-1 sm:mb-0">
                 開催方法
               </dt>
-              <dd className="text-neutral-200">
-                Zoom（申込後、URL送付）
-              </dd>
+              <dd className="text-neutral-200">Zoom（申込後、URL送付）</dd>
             </div>
             <div className="flex flex-col sm:flex-row sm:gap-8">
               <dt className="text-neutral-500 w-32 shrink-0 mb-1 sm:mb-0">
@@ -150,6 +150,9 @@ export default function Home() {
 
           <div className="mt-6 pt-6 border-t border-neutral-800 space-y-2 text-xs text-neutral-500">
             <p>※現在コンサル契約中の方・PBA生は無料</p>
+            <p>
+              ※クーポンコードをお持ちの方はStripe決済画面で入力してください
+            </p>
             <p>※契約中の方は間違って決済しないようご注意ください。</p>
           </div>
         </div>

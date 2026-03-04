@@ -3,7 +3,7 @@ import Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
 import { addAirtableRecord } from "@/lib/airtable";
 import { appendToSheet } from "@/lib/google-sheets";
-import { sendConfirmationEmail } from "@/lib/email";
+import { sendConfirmationEmail, sendAdminNotification } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -34,21 +34,18 @@ export async function POST(req: NextRequest) {
     const customerData = {
       name: metadata.name,
       email: metadata.email,
-      phone: metadata.phone,
-      company: metadata.company,
+      phone: "",
+      company: "",
       paymentStatus: "completed",
       stripeSessionId: session.id,
       appliedAt: now,
     };
 
-    // 並行実行：Airtable記録、Google Sheets記録、メール送信
     const results = await Promise.allSettled([
       addAirtableRecord(customerData),
       appendToSheet([
         customerData.name,
         customerData.email,
-        customerData.phone,
-        customerData.company,
         customerData.paymentStatus,
         customerData.stripeSessionId,
         customerData.appliedAt,
@@ -57,12 +54,16 @@ export async function POST(req: NextRequest) {
         to: customerData.email,
         name: customerData.name,
       }),
+      sendAdminNotification({
+        name: customerData.name,
+        email: customerData.email,
+        appliedAt: now,
+      }),
     ]);
 
-    // エラーログ
     results.forEach((result, index) => {
       if (result.status === "rejected") {
-        const services = ["Airtable", "Google Sheets", "Email"];
+        const services = ["Airtable", "Google Sheets", "確認メール", "管理者通知"];
         console.error(`${services[index]} error:`, result.reason);
       }
     });
