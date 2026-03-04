@@ -4,10 +4,10 @@ import { SEMINAR_CONFIG } from "@/lib/seminar-config";
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, businessType, revenue, situation, question } =
+    const { name, email, businessType, situation, referral, referralOther, question } =
       await req.json();
 
-    if (!name || !email || !businessType || !revenue || !situation) {
+    if (!name || !email || !businessType || !situation || !referral) {
       return NextResponse.json(
         { error: "必須項目を入力してください" },
         { status: 400 }
@@ -38,8 +38,9 @@ export async function POST(req: NextRequest) {
         name,
         email,
         businessType,
-        revenue,
         situation,
+        referral,
+        referralOther: referralOther || "",
         question: question || "",
       },
     });

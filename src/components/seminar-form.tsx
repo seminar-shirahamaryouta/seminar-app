@@ -7,13 +7,7 @@ const BUSINESS_TYPES = [
   "フリーランス・個人事業主",
   "会社員（副業あり）",
   "会社員（副業なし）",
-];
-
-const REVENUE_RANGES = [
-  "〜100万",
-  "100〜500万",
-  "500〜1000万",
-  "1000万以上",
+  "その他",
 ];
 
 const CURRENT_SITUATIONS = [
@@ -22,6 +16,66 @@ const CURRENT_SITUATIONS = [
   "正直、まだ危機感はそこまでない",
   "変化をチャンスだと感じている",
 ];
+
+const REFERRAL_SOURCES = [
+  "ハマーのメルマガ・LINE",
+  "ハマーのSNS",
+  "知人・友人からの紹介",
+  "その他",
+];
+
+function RadioGroupWithOther({
+  name,
+  label,
+  options,
+  otherPlaceholder,
+  selected,
+  onSelect,
+}: {
+  name: string;
+  label: string;
+  options: string[];
+  otherPlaceholder?: string;
+  selected: string;
+  onSelect: (value: string) => void;
+}) {
+  const isOther = selected === "その他";
+
+  return (
+    <fieldset>
+      <legend className="block text-xs tracking-wider text-neutral-500 mb-3">
+        {label} <span className="text-neutral-600">*</span>
+      </legend>
+      <div className="space-y-2">
+        {options.map((option) => (
+          <label
+            key={option}
+            className="flex items-center gap-3 px-4 py-3 border border-neutral-800 rounded-sm cursor-pointer hover:border-neutral-600 has-[:checked]:border-neutral-500 has-[:checked]:bg-neutral-800/50 transition-colors"
+          >
+            <input
+              type="radio"
+              name={name}
+              value={option}
+              required
+              onChange={() => onSelect(option)}
+              className="appearance-none w-3.5 h-3.5 border border-neutral-600 rounded-full checked:border-white checked:bg-white checked:shadow-[inset_0_0_0_2px_#171717] shrink-0 transition-colors"
+            />
+            <span className="text-sm text-neutral-200">{option}</span>
+          </label>
+        ))}
+      </div>
+      {isOther && (
+        <input
+          type="text"
+          name={`${name}Other`}
+          required
+          className="w-full mt-2 bg-neutral-950 border border-neutral-800 rounded-sm px-4 py-3 text-sm text-neutral-100 placeholder-neutral-700 focus:outline-none focus:border-neutral-600 transition-colors"
+          placeholder={otherPlaceholder || "詳細をご記入ください"}
+        />
+      )}
+    </fieldset>
+  );
+}
 
 function RadioGroup({
   name,
@@ -60,18 +114,33 @@ function RadioGroup({
 
 export default function SeminarForm() {
   const [loading, setLoading] = useState(false);
+  const [selectedBusinessType, setSelectedBusinessType] = useState("");
+  const [selectedReferral, setSelectedReferral] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
 
     const formData = new FormData(e.currentTarget);
+    const businessType = formData.get("businessType") as string;
+    const referral = formData.get("referral") as string;
+
     const data = {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
-      businessType: formData.get("businessType") as string,
-      revenue: formData.get("revenue") as string,
+      businessType:
+        businessType === "その他"
+          ? `その他: ${formData.get("businessTypeOther") as string}`
+          : businessType,
       situation: formData.get("situation") as string,
+      referral:
+        referral === "その他"
+          ? `その他: ${formData.get("referralOther") as string}`
+          : referral,
+      referralOther:
+        referral === "その他"
+          ? (formData.get("referralOther") as string)
+          : "",
       question: (formData.get("question") as string) || "",
     };
 
@@ -131,22 +200,27 @@ export default function SeminarForm() {
         />
       </div>
 
-      <RadioGroup
+      <RadioGroupWithOther
         name="businessType"
         label="現在のビジネス形態"
         options={BUSINESS_TYPES}
-      />
-
-      <RadioGroup
-        name="revenue"
-        label="現在の年商・売上規模"
-        options={REVENUE_RANGES}
+        selected={selectedBusinessType}
+        onSelect={setSelectedBusinessType}
       />
 
       <RadioGroup
         name="situation"
         label="今の状況に最も近いもの"
         options={CURRENT_SITUATIONS}
+      />
+
+      <RadioGroupWithOther
+        name="referral"
+        label="このセミナーをどこでお知りになりましたか？"
+        options={REFERRAL_SOURCES}
+        otherPlaceholder="紹介者名・媒体名などをご記入ください"
+        selected={selectedReferral}
+        onSelect={setSelectedReferral}
       />
 
       <div>

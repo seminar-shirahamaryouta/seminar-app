@@ -6,8 +6,9 @@ interface CustomerRecord {
   name: string;
   email: string;
   businessType: string;
-  revenue: string;
   situation: string;
+  referral: string;
+  referralOther: string;
   question: string;
   paymentStatus: string;
   stripeSessionId: string;
@@ -30,8 +31,9 @@ export async function addAirtableRecord(record: CustomerRecord) {
             名前: record.name,
             メール: record.email,
             ビジネス形態: record.businessType,
-            年商規模: record.revenue,
             現在の状況: record.situation,
+            流入経路: record.referral,
+            流入経路詳細: record.referralOther,
             当日の質問: record.question,
             決済ステータス: record.paymentStatus,
             StripeセッションID: record.stripeSessionId,
