@@ -1,0 +1,16 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/reminder?type=eve",
+      "schedule": "0 11 10 3 *"
+    },
+    {
+      "path": "/api/cron/reminder?type=day",
+      "schedule": "0 8 11 3 *"
+    },
+    {
+      "path": "/api/cron/reminder?type=soon",
+      "schedule": "30 10 11 3 *"
+    }
+  ]
+}

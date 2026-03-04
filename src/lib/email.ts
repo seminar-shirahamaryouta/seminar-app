@@ -57,6 +57,73 @@ interface SendAdminNotificationParams {
   appliedAt: string;
 }
 
+const ZOOM_INFO = {
+  url: "https://us02web.zoom.us/j/85272055617?pwd=Ny3nSpp7NMTDIvjxbZMnp7AC91xDUE.1",
+  meetingId: "852 7205 5617",
+  passcode: "868757",
+};
+
+function reminderHtml(name: string, subject: string) {
+  const { title, date, time, organizer } = SEMINAR_CONFIG;
+  return `
+    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+      <h2>${subject}</h2>
+      <p>${name} 様</p>
+
+      <table style="border-collapse: collapse; width: 100%; margin: 20px 0;">
+        <tr style="border-bottom: 1px solid #eee;">
+          <td style="padding: 8px; font-weight: bold; width: 140px;">開催日時</td>
+          <td style="padding: 8px;">${date} ${time}</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #eee;">
+          <td style="padding: 8px; font-weight: bold;">Zoom URL</td>
+          <td style="padding: 8px;"><a href="${ZOOM_INFO.url}">${ZOOM_INFO.url}</a></td>
+        </tr>
+        <tr style="border-bottom: 1px solid #eee;">
+          <td style="padding: 8px; font-weight: bold;">ミーティングID</td>
+          <td style="padding: 8px;">${ZOOM_INFO.meetingId}</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #eee;">
+          <td style="padding: 8px; font-weight: bold;">パスコード</td>
+          <td style="padding: 8px;">${ZOOM_INFO.passcode}</td>
+        </tr>
+      </table>
+
+      <div style="background: #f9f9f9; padding: 16px; border-radius: 4px; margin: 20px 0;">
+        <p style="margin: 0 0 8px; font-weight: bold;">参加条件</p>
+        <ul style="margin: 0; padding-left: 20px;">
+          <li>カメラオンでご参加ください</li>
+          <li>開始5分前にはご入室ください</li>
+          <li>アーカイブはありません。当日のみの開催です。</li>
+        </ul>
+      </div>
+
+      <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;" />
+      <p style="color: #888; font-size: 12px;">${organizer}</p>
+    </div>
+  `;
+}
+
+export async function sendReminderEmail({
+  to,
+  name,
+  subject,
+}: {
+  to: string;
+  name: string;
+  subject: string;
+}) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const { organizer } = SEMINAR_CONFIG;
+
+  await resend.emails.send({
+    from: `${organizer} <onboarding@resend.dev>`,
+    to,
+    subject,
+    html: reminderHtml(name, subject),
+  });
+}
+
 export async function sendAdminNotification({
   name,
   email,
