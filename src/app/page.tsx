@@ -2,10 +2,10 @@ import SeminarForm from "@/components/seminar-form";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 py-16">
+    <main className="min-h-screen flex items-center justify-center px-4 py-20">
       <div className="max-w-2xl w-full">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-20">
           <p className="text-xs tracking-[0.3em] text-neutral-500 uppercase mb-6">
             Special Seminar
           </p>
@@ -18,8 +18,8 @@ export default function Home() {
         </div>
 
         {/* Main Copy */}
-        <div className="space-y-8 mb-20 text-[15px] leading-[2] text-neutral-300">
-          <p className="text-lg font-light text-neutral-100">
+        <div className="space-y-10 mb-24 text-[15px] leading-[2] text-neutral-200">
+          <p className="text-lg font-light text-white">
             大淘汰時代のビジネス生存戦略。
           </p>
 
@@ -56,7 +56,7 @@ export default function Home() {
           <p>現状に留まれば、どれだけ努力しても市場に飲み込まれます。</p>
 
           {/* Divider */}
-          <div className="border-t border-neutral-800 my-12" />
+          <div className="border-t border-neutral-800" />
 
           <p>今回の特別セミナーでは、</p>
 
@@ -108,12 +108,12 @@ export default function Home() {
         </div>
 
         {/* Seminar Details */}
-        <div className="border border-neutral-800 rounded-sm p-8 mb-16">
+        <div className="bg-neutral-900 border border-neutral-800 rounded-sm p-10 mb-20">
           <h2 className="text-xs tracking-[0.2em] text-neutral-500 uppercase mb-8">
             Seminar Details
           </h2>
 
-          <dl className="space-y-5 text-sm">
+          <dl className="space-y-6 text-sm">
             <div className="flex flex-col sm:flex-row sm:gap-8">
               <dt className="text-neutral-500 w-32 shrink-0 mb-1 sm:mb-0">
                 タイトル
@@ -144,43 +144,43 @@ export default function Home() {
               <dt className="text-neutral-500 w-32 shrink-0 mb-1 sm:mb-0">
                 参加費
               </dt>
-              <dd className="text-white text-lg font-light">¥5,500（税込）</dd>
+              <dd className="text-white text-2xl font-light">¥5,500<span className="text-sm text-neutral-400 ml-1">（税込）</span></dd>
             </div>
           </dl>
 
-          <div className="mt-6 pt-6 border-t border-neutral-800 space-y-2 text-xs text-neutral-500">
+          <div className="mt-8 pt-8 border-t border-neutral-800 space-y-2 text-xs text-neutral-500">
             <p>※現在コンサル契約中の方・PBA生は無料</p>
-            <p>
-              ※クーポンコードをお持ちの方はStripe決済画面で入力してください
-            </p>
+            <p>クーポンコードをStripe決済画面で入力してください</p>
             <p>※契約中の方は間違って決済しないようご注意ください。</p>
           </div>
         </div>
 
         {/* Conditions */}
-        <div className="mb-16 space-y-3 text-sm text-neutral-400">
-          <h2 className="text-xs tracking-[0.2em] text-neutral-500 uppercase mb-6">
+        <div className="bg-neutral-900 border border-neutral-800 rounded-sm p-10 mb-20">
+          <h2 className="text-xs tracking-[0.2em] text-neutral-500 uppercase mb-8">
             Conditions
           </h2>
-          <p>
-            ・事前にスケジュールを確保し、カメラオンで集中して参加できる方のみ
-          </p>
-          <p>・アーカイブはありません</p>
-          <p className="text-neutral-300 mt-4">
-            その場にいる人だけに話します。
-          </p>
+          <div className="space-y-3 text-sm text-neutral-300">
+            <p>
+              ・事前にスケジュールを確保し、カメラオンで集中して参加できる方のみ
+            </p>
+            <p>・アーカイブはありません</p>
+            <p className="text-white mt-6">
+              その場にいる人だけに話します。
+            </p>
+          </div>
         </div>
 
         {/* CTA / Form */}
-        <div className="border border-neutral-800 rounded-sm p-8">
-          <h2 className="text-center text-lg font-light tracking-wide mb-8 text-neutral-200">
+        <div className="bg-neutral-900 border border-neutral-800 rounded-sm p-10">
+          <h2 className="text-center text-lg font-light tracking-wide mb-10 text-neutral-200">
             参加申し込み
           </h2>
           <SeminarForm />
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-16 text-xs text-neutral-600">
+        <div className="text-center mt-20 text-xs text-neutral-600">
           <p>SURVIVE 2026</p>
         </div>
       </div>
