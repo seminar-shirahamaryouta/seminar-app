@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "セミナー申し込み",
-  description: "セミナーの申し込み・決済ページ",
+  title: "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー",
+  description:
+    "大淘汰時代のビジネス生存戦略。構造理解・戦略判断・実装まで踏み込む一度きりの特別セミナー。",
 };
 
 export default function RootLayout({
@@ -13,7 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body className="bg-gray-50 text-gray-900 antialiased">{children}</body>
+      <body className="bg-neutral-950 text-neutral-100 antialiased">
+        {children}
+      </body>
     </html>
   );
 }

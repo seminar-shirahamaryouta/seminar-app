@@ -4,7 +4,7 @@ import { SEMINAR_CONFIG } from "@/lib/seminar-config";
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, phone, company } = await req.json();
+    const { name, email } = await req.json();
 
     if (!name || !email) {
       return NextResponse.json(
@@ -35,8 +35,6 @@ export async function POST(req: NextRequest) {
       metadata: {
         name,
         email,
-        phone: phone || "",
-        company: company || "",
       },
     });
 

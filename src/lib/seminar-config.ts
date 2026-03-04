@@ -1,14 +1,10 @@
 export const SEMINAR_CONFIG = {
-  title: "【サンプル】AI活用セミナー 2026",
-  description:
-    "最新のAI技術を活用したビジネス戦略について学ぶセミナーです。実践的なワークショップも含まれています。",
-  date: "2026年4月15日（水）",
-  time: "14:00〜17:00",
-  venue: "東京都渋谷区 〇〇ビル 5F セミナールーム",
-  venueOnline: "Zoomウェビナー（ハイブリッド開催）",
-  price: 5000,
+  title: "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー",
+  date: "2026年3月11日（水）",
+  time: "20:00〜21:30",
+  venue: "Zoom（申込後、URL送付）",
+  price: 5500,
   currency: "jpy",
-  capacity: 50,
-  organizer: "株式会社サンプル",
+  organizer: "SURVIVE 2026",
   contactEmail: "info@example.com",
 };

@@ -11,7 +11,7 @@ export async function sendConfirmationEmail({
   name,
 }: SendConfirmationParams) {
   const resend = new Resend(process.env.RESEND_API_KEY);
-  const { title, date, time, venue, venueOnline, organizer, contactEmail } =
+  const { title, date, time, venue, organizer, contactEmail } =
     SEMINAR_CONFIG;
 
   await resend.emails.send({
@@ -35,7 +35,7 @@ export async function sendConfirmationEmail({
           </tr>
           <tr style="border-bottom: 1px solid #eee;">
             <td style="padding: 8px; font-weight: bold;">会場</td>
-            <td style="padding: 8px;">${venue}<br>${venueOnline}</td>
+            <td style="padding: 8px;">${venue}</td>
           </tr>
         </table>
 

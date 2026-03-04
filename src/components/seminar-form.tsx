@@ -13,8 +13,6 @@ export default function SeminarForm() {
     const data = {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
-      phone: formData.get("phone") as string,
-      company: formData.get("company") as string,
     };
 
     try {
@@ -35,67 +33,41 @@ export default function SeminarForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-5">
       <div>
-        <label htmlFor="name" className="block text-sm font-medium mb-1">
-          お名前 <span className="text-red-500">*</span>
+        <label htmlFor="name" className="block text-xs tracking-wider text-neutral-500 mb-2">
+          お名前 <span className="text-neutral-600">*</span>
         </label>
         <input
           type="text"
           id="name"
           name="name"
           required
-          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full bg-neutral-900 border border-neutral-800 rounded-sm px-4 py-3 text-sm text-neutral-100 placeholder-neutral-700 focus:outline-none focus:border-neutral-600 transition-colors"
           placeholder="山田 太郎"
         />
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium mb-1">
-          メールアドレス <span className="text-red-500">*</span>
+        <label htmlFor="email" className="block text-xs tracking-wider text-neutral-500 mb-2">
+          メールアドレス <span className="text-neutral-600">*</span>
         </label>
         <input
           type="email"
           id="email"
           name="email"
           required
-          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full bg-neutral-900 border border-neutral-800 rounded-sm px-4 py-3 text-sm text-neutral-100 placeholder-neutral-700 focus:outline-none focus:border-neutral-600 transition-colors"
           placeholder="taro@example.com"
-        />
-      </div>
-
-      <div>
-        <label htmlFor="phone" className="block text-sm font-medium mb-1">
-          電話番号
-        </label>
-        <input
-          type="tel"
-          id="phone"
-          name="phone"
-          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="090-1234-5678"
-        />
-      </div>
-
-      <div>
-        <label htmlFor="company" className="block text-sm font-medium mb-1">
-          会社名
-        </label>
-        <input
-          type="text"
-          id="company"
-          name="company"
-          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="株式会社サンプル"
         />
       </div>
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-blue-600 text-white py-3 rounded-md font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="w-full mt-2 bg-white text-neutral-950 py-3.5 rounded-sm text-sm font-medium tracking-wider hover:bg-neutral-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
-        {loading ? "処理中..." : "申し込む（決済へ進む）"}
+        {loading ? "処理中..." : "申し込む — ¥5,500"}
       </button>
     </form>
   );
