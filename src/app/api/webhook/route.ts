@@ -69,10 +69,18 @@ export async function POST(req: NextRequest) {
       }),
     ]);
 
+    const services = ["Airtable", "Google Sheets", "確認メール", "管理者通知"];
     results.forEach((result, index) => {
       if (result.status === "rejected") {
-        const services = ["Airtable", "Google Sheets", "確認メール", "管理者通知"];
-        console.error(`${services[index]} error:`, result.reason);
+        console.error(`[Webhook] ${services[index]} failed:`, {
+          service: services[index],
+          error: result.reason instanceof Error ? result.reason.message : result.reason,
+          stack: result.reason instanceof Error ? result.reason.stack : undefined,
+          customerEmail: customerData.email,
+          sessionId: session.id,
+        });
+      } else {
+        console.log(`[Webhook] ${services[index]} succeeded for session ${session.id}`);
       }
     });
   }
