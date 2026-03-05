@@ -29,7 +29,7 @@ export async function addAirtableRecord(record: CustomerRecord) {
         {
           fields: {
             名前: record.name,
-            メール: record.email,
+            メールアドレス: record.email,
             ビジネス形態: record.businessType,
             現在の状況: record.situation,
             流入経路: record.referral,
