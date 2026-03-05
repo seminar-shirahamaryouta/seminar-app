@@ -6,5 +6,5 @@ export const SEMINAR_CONFIG = {
   price: 5500,
   currency: "jpy",
   organizer: "SURVIVE 2026",
-  contactEmail: "info@example.com",
+  contactEmail: "info@promote-business.academy",
 };
