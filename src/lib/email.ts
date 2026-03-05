@@ -15,7 +15,7 @@ export async function sendConfirmationEmail({
     SEMINAR_CONFIG;
 
   await resend.emails.send({
-    from: `${organizer} <onboarding@resend.dev>`,
+    from: `${organizer} <info@promote-business.academy>`,
     to,
     subject: `【申込完了】${title}`,
     html: `
@@ -117,7 +117,7 @@ export async function sendReminderEmail({
   const { organizer } = SEMINAR_CONFIG;
 
   await resend.emails.send({
-    from: `${organizer} <onboarding@resend.dev>`,
+    from: `${organizer} <info@promote-business.academy>`,
     to,
     subject,
     html: reminderHtml(name, subject),
@@ -133,7 +133,7 @@ export async function sendAdminNotification({
   const { title, organizer } = SEMINAR_CONFIG;
 
   await resend.emails.send({
-    from: `${organizer} <onboarding@resend.dev>`,
+    from: `${organizer} <info@promote-business.academy>`,
     to: "shirahama@webull.jp",
     subject: `【新規申込】${title}`,
     html: `
