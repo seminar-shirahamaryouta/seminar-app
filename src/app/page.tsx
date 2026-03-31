@@ -15,6 +15,10 @@ export default function Home() {
           <p className="text-sm text-neutral-400 tracking-wider">
             大淘汰時代のポジション再設計セミナー
           </p>
+          <div className="mt-8 space-y-1 text-[15px] leading-[2] text-neutral-300">
+            <p>AI時代に何を資産として残していくべきなのか？</p>
+            <p>新しい時代のマーケティングをお伝えします。</p>
+          </div>
         </div>
 
         {/* Main Copy */}
@@ -127,7 +131,7 @@ export default function Home() {
                 日時
               </dt>
               <dd className="text-neutral-200">
-                2026年3月11日（水）20:00〜21:30
+                2026年4月8日（金）20:00〜21:30
                 <br />
                 <span className="text-neutral-500 text-xs">
                   ※開始5分前にはご入室ください

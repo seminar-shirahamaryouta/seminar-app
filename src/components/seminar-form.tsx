@@ -19,7 +19,8 @@ const CURRENT_SITUATIONS = [
 
 const REFERRAL_SOURCES = [
   "ハマーのメルマガ・LINE",
-  "ハマーのSNS",
+  "いれぶん塾での紹介",
+  "AI Dreamers Productionのメルマガ",
   "知人・友人からの紹介",
   "その他",
 ];
