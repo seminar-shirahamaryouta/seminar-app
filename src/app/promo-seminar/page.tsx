@@ -151,7 +151,7 @@ export default function PromoSeminar() {
                 参加費
               </dt>
               <dd className="text-white text-2xl font-light">
-                ¥TBD
+                ¥2,026
                 <span className="text-sm text-neutral-400 ml-1">（税込）</span>
               </dd>
             </div>

@@ -21,10 +21,10 @@ export default function SuccessPage() {
           </Link>
         </div>
 
-        {/* 特別ご案内 */}
+        {/* 特別ご招待 */}
         <div className="mt-8 bg-yellow-400 rounded-sm p-10">
-          <h2 className="text-xl font-medium tracking-wide text-neutral-950 mb-6">
-            申込者限定の特別ご案内
+          <h2 className="text-xl font-bold tracking-wide text-neutral-950 mb-6 text-center">
+            ＼ 申込者限定の特別ご招待 ／
           </h2>
           <div className="space-y-4 text-sm text-neutral-800 leading-relaxed mb-8">
             <p>
@@ -35,29 +35,16 @@ export default function SuccessPage() {
               <span className="text-base text-neutral-950 font-medium">
                 プロモートビジネスセミナー入門編
               </span>
-              を開催します。
             </p>
-            <p>
-              本セミナー参加者限定で
-              <span className="text-neutral-950 font-bold">¥2,026引き</span>
-              のクーポンをご用意しました。
-              <br />
-              Stripe決済画面でコードを入力してください。
+            <p className="text-neutral-950 font-bold text-base">
+              通常¥2,026のセミナーを無料でご招待します
             </p>
-          </div>
-          <div className="bg-neutral-950 rounded-sm px-6 py-4 flex items-center justify-between mb-8">
-            <code className="text-xl md:text-2xl font-mono tracking-widest text-white">
-              SURVIVE2026
-            </code>
-            <span className="text-xs text-neutral-400 shrink-0 ml-4">
-              coupon code
-            </span>
           </div>
           <a
             href="https://seminar-app-two.vercel.app/promo-seminar-2026"
             className="inline-block w-full text-center bg-neutral-950 text-white py-4 rounded-sm text-sm font-medium tracking-wider hover:bg-neutral-800 transition-colors"
           >
-            セミナーの詳細を見る &rarr;
+            無料で申し込む &rarr;
           </a>
         </div>
 
