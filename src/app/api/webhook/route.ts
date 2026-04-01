@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
-import { addAirtableRecord } from "@/lib/airtable";
+import {
+  addAirtableRecord,
+  upsertCustomer,
+  incrementSeminarCount,
+} from "@/lib/airtable";
 import { appendToSheet } from "@/lib/google-sheets";
 import { sendConfirmationEmail, sendAdminNotification } from "@/lib/email";
 
@@ -46,6 +50,8 @@ export async function POST(req: NextRequest) {
 
     const results = await Promise.allSettled([
       addAirtableRecord(customerData),
+      upsertCustomer(customerData),
+      incrementSeminarCount(),
       appendToSheet([
         customerData.name,
         customerData.email,
@@ -69,7 +75,14 @@ export async function POST(req: NextRequest) {
       }),
     ]);
 
-    const services = ["Airtable", "Google Sheets", "確認メール", "管理者通知"];
+    const services = [
+      "Airtable(参加者管理)",
+      "Airtable(Customers)",
+      "Airtable(Seminars)",
+      "Google Sheets",
+      "確認メール",
+      "管理者通知",
+    ];
     results.forEach((result, index) => {
       if (result.status === "rejected") {
         console.error(`[Webhook] ${services[index]} failed:`, {
