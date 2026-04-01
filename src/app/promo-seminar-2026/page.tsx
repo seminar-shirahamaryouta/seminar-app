@@ -8,7 +8,7 @@ export default function PromoSeminar2026() {
             SURVIVE 2026 にご参加いただいた方への特別ご案内です。
           </p>
           <p className="text-xs tracking-[0.3em] text-neutral-500 uppercase mb-6">
-            Invitation Only
+            限定ご案内
           </p>
           <h1 className="text-3xl md:text-4xl font-light tracking-wide leading-relaxed mb-4">
             プロモートビジネスセミナー入門編
@@ -38,8 +38,10 @@ export default function PromoSeminar2026() {
               <br />
               どれだけ努力して身につけても、
               <br />
-              半年後には使えなくなります。
+              一年後、いや時代の変化の早い今は、半年後には使えなくなります。
             </p>
+
+            <p>それでも、次々と新しい手法を追いかけ続けることになる。</p>
 
             <p className="text-lg italic text-white">
               永遠とショートを繰り返すことになる。
@@ -51,28 +53,36 @@ export default function PromoSeminar2026() {
           {/* こんな人へ */}
           <div>
             <p className="text-xs tracking-[0.2em] text-neutral-500 uppercase mb-6">
-              For You
+              こんな方へ
             </p>
             <ul className="space-y-3 pl-1">
               <li className="flex gap-3">
                 <span className="text-neutral-600 shrink-0">—</span>
-                <span>
-                  AIを事業に入れたいけど、何から始めればいいかわからない
-                </span>
+                <span>起業・副業をしたいが、売れる「強み」や「経験」が見つからない方</span>
               </li>
               <li className="flex gap-3">
                 <span className="text-neutral-600 shrink-0">—</span>
-                <span>
-                  自分のスキルや経験をどう活かすか迷っている
-                </span>
+                <span>集客が減り、新しい方向性を探している講師・コンサル・カウンセラーの方</span>
               </li>
               <li className="flex gap-3">
                 <span className="text-neutral-600 shrink-0">—</span>
-                <span>一人でやることに限界を感じている</span>
+                <span>流行りの手法を試してきたが、なかなか結果が出ていない方</span>
               </li>
               <li className="flex gap-3">
                 <span className="text-neutral-600 shrink-0">—</span>
-                <span>後発でも勝てるポジションを見つけたい</span>
+                <span>自分がいなくてもビジネスが回る仕組みを手に入れたい方</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-neutral-600 shrink-0">—</span>
+                <span>持ち出し資金を抑えながら、大きなビジネスをしたい方</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-neutral-600 shrink-0">—</span>
+                <span>AIを活用した新しいビジネスの形を探している方</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-neutral-600 shrink-0">—</span>
+                <span>友人や家族に堂々と語れる、誇れるビジネスをしたい方</span>
               </li>
             </ul>
           </div>
@@ -82,32 +92,36 @@ export default function PromoSeminar2026() {
           {/* 当日お伝えすること */}
           <div>
             <p className="text-xs tracking-[0.2em] text-neutral-500 uppercase mb-6">
-              What You Will Learn
+              当日お伝えすること
             </p>
             <ul className="space-y-3 pl-1">
               <li className="flex gap-3">
                 <span className="text-neutral-600 shrink-0">—</span>
-                <span>
-                  AI時代における「プロモートビジネス」の全体像
-                </span>
+                <span>AI時代における「プロモートビジネス」の全体像</span>
               </li>
               <li className="flex gap-3">
                 <span className="text-neutral-600 shrink-0">—</span>
-                <span>
-                  生産手段を持たずに戦う人が消えていく理由
-                </span>
+                <span>生産手段を持たずに戦う人が消えていく理由</span>
               </li>
               <li className="flex gap-3">
                 <span className="text-neutral-600 shrink-0">—</span>
-                <span>
-                  一流の人とパートナーシップを組む具体的な方法
-                </span>
+                <span>一流の人とパートナーシップを組む具体的な方法</span>
               </li>
               <li className="flex gap-3">
                 <span className="text-neutral-600 shrink-0">—</span>
-                <span>
-                  後発でも圧倒的に差をつける3つのポジション戦略
-                </span>
+                <span>後発でも圧倒的に差をつけるポジション戦略</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-neutral-600 shrink-0">—</span>
+                <span>AIを使った新しいマネタイズの方法</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-neutral-600 shrink-0">—</span>
+                <span>会社員から副業で始めて28,000人を集客できるようになった事例</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-neutral-600 shrink-0">—</span>
+                <span>流行りに左右されない、未来に向けて資産を蓄積できるビジネス構築思考</span>
               </li>
             </ul>
           </div>
@@ -116,7 +130,7 @@ export default function PromoSeminar2026() {
         {/* Seminar Details */}
         <div className="bg-neutral-900 border border-neutral-800 rounded-sm p-10 mb-10">
           <h2 className="text-xs tracking-[0.2em] text-neutral-500 uppercase mb-8">
-            Seminar Details
+            セミナー詳細
           </h2>
 
           <dl className="space-y-6 text-sm">
@@ -179,7 +193,7 @@ export default function PromoSeminar2026() {
         {/* Notes */}
         <div className="bg-neutral-900 border border-neutral-800 rounded-sm p-10 mb-10">
           <h2 className="text-xs tracking-[0.2em] text-neutral-500 uppercase mb-8">
-            Notes
+            ご注意事項
           </h2>
           <div className="space-y-3 text-sm text-neutral-300">
             <p>・アーカイブはありません</p>
