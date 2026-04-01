@@ -182,7 +182,7 @@ export default function PromoSeminar2026() {
               <dt className="text-neutral-500 w-32 shrink-0 mb-1 sm:mb-0">
                 開催方法
               </dt>
-              <dd className="text-neutral-200">Zoom（申込後にURL送付）</dd>
+              <dd className="text-neutral-200">Zoom（申込後にURLをメールでお送りします）</dd>
             </div>
             <div className="flex flex-col sm:flex-row sm:gap-8">
               <dt className="text-neutral-500 w-32 shrink-0 mb-1 sm:mb-0">
