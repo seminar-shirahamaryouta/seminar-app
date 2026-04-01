@@ -56,7 +56,10 @@ export async function addAirtableRecord(record: CustomerRecord) {
 
 const CUSTOMERS_TABLE_ID = "tblOZS4E3c2ZjAvye";
 
-export async function upsertCustomer(record: CustomerRecord) {
+export async function upsertCustomer(
+  record: CustomerRecord,
+  referralOverride?: string
+) {
   const baseUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${CUSTOMERS_TABLE_ID}`;
   const headers = {
     Authorization: `Bearer ${AIRTABLE_API_KEY}`,
@@ -100,7 +103,7 @@ export async function upsertCustomer(record: CustomerRecord) {
             fields: {
               名前: record.name,
               メールアドレス: record.email,
-              "流入経路（初回）": record.referral || "",
+              "流入経路（初回）": referralOverride || record.referral || "",
               初回申込日: today,
               関係ステータス: "顧客",
               最終接触日: today,
@@ -119,10 +122,27 @@ export async function upsertCustomer(record: CustomerRecord) {
 // --- Seminars テーブル (tblLjcExsBR1iNEWG) ---
 
 const SEMINARS_TABLE_ID = "tblLjcExsBR1iNEWG";
-const SEMINAR_NAME =
-  "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー（4/8）";
 
-export async function incrementSeminarCount() {
+interface SeminarDefaults {
+  name: string;
+  dateTime: string;
+  price: number;
+}
+
+const SEMINAR_DEFAULTS: Record<string, SeminarDefaults> = {
+  "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー": {
+    name: "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー",
+    dateTime: "2026-04-08T20:00:00.000Z",
+    price: 5500,
+  },
+  "プロモートビジネスセミナー入門編": {
+    name: "プロモートビジネスセミナー入門編",
+    dateTime: "2026-04-10T20:00:00.000Z",
+    price: 0,
+  },
+};
+
+export async function incrementSeminarCount(seminarName: string) {
   const baseUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${SEMINARS_TABLE_ID}`;
   const headers = {
     Authorization: `Bearer ${AIRTABLE_API_KEY}`,
@@ -131,7 +151,7 @@ export async function incrementSeminarCount() {
 
   // セミナー名で検索
   const searchParams = new URLSearchParams({
-    filterByFormula: `{セミナー名} = "${SEMINAR_NAME}"`,
+    filterByFormula: `{セミナー名} = "${seminarName}"`,
     maxRecords: "1",
   });
   const searchRes = await fetch(`${baseUrl}?${searchParams}`, { headers });
@@ -148,6 +168,7 @@ export async function incrementSeminarCount() {
     currentCount = searchData.records[0].fields["申込数"] || 0;
   } else {
     // 存在しない場合は新規作成
+    const defaults = SEMINAR_DEFAULTS[seminarName];
     const createRes = await fetch(baseUrl, {
       method: "POST",
       headers,
@@ -155,9 +176,9 @@ export async function incrementSeminarCount() {
         records: [
           {
             fields: {
-              セミナー名: SEMINAR_NAME,
-              "開催日時": "2026-04-08T20:00:00.000Z",
-              参加費: 5500,
+              セミナー名: seminarName,
+              "開催日時": defaults?.dateTime || "",
+              参加費: defaults?.price || 0,
               ステータス: "受付中",
               申込数: 0,
             },

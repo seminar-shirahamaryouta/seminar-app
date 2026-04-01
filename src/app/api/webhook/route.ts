@@ -32,12 +32,39 @@ export async function POST(req: NextRequest) {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
-    const metadata = session.metadata!;
+    const metadata = session.metadata || {};
     const now = new Date().toISOString();
 
+    // name/emailのフォールバック
+    const name =
+      metadata.name ||
+      session.customer_details?.name ||
+      "";
+    const email =
+      metadata.email ||
+      session.customer_details?.email ||
+      "";
+
+    // セミナー判別
+    const clientRef = (session.client_reference_id || "").toLowerCase();
+    let seminarName: string;
+    let referralSource: string;
+
+    if (clientRef === "survive2026") {
+      seminarName = "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー";
+      referralSource = "SURVIVE 2026経由";
+    } else if (clientRef === "general" || clientRef === "promo2026") {
+      seminarName = "プロモートビジネスセミナー入門編";
+      referralSource = "一般申込";
+    } else {
+      // デフォルト: 4/8セミナー（フォーム経由の申込）
+      seminarName = "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー";
+      referralSource = metadata.referral || "";
+    }
+
     const customerData = {
-      name: metadata.name,
-      email: metadata.email,
+      name,
+      email,
       businessType: metadata.businessType || "",
       situation: metadata.situation || "",
       referral: metadata.referral || "",
@@ -50,8 +77,8 @@ export async function POST(req: NextRequest) {
 
     const results = await Promise.allSettled([
       addAirtableRecord(customerData),
-      upsertCustomer(customerData),
-      incrementSeminarCount(),
+      upsertCustomer(customerData, referralSource),
+      incrementSeminarCount(seminarName),
       appendToSheet([
         customerData.name,
         customerData.email,
