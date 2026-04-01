@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getParticipants } from "@/lib/airtable";
-import { sendReminderEmail } from "@/lib/email";
-
-const REMINDERS: Record<string, string> = {
-  "eve": "【明日開催】SURVIVE 2026｜大淘汰時代のポジション再設計セミナー",
-  "day": "【本日開催】SURVIVE 2026｜大淘汰時代のポジション再設計セミナー",
-  "soon": "【30分後開始】SURVIVE 2026｜大淘汰時代のポジション再設計セミナー",
-};
+import {
+  sendReminderEmail,
+  REMINDERS_SURVIVE,
+  REMINDERS_PROMO,
+  type SeminarType,
+} from "@/lib/email";
 
 export async function GET(req: NextRequest) {
   // Verify cron secret to prevent unauthorized access
@@ -16,11 +15,14 @@ export async function GET(req: NextRequest) {
   }
 
   const type = req.nextUrl.searchParams.get("type");
-  const subject = type ? REMINDERS[type] : null;
+  const seminar = (req.nextUrl.searchParams.get("seminar") || "survive") as SeminarType;
+
+  const reminders = seminar === "promo" ? REMINDERS_PROMO : REMINDERS_SURVIVE;
+  const subject = type ? reminders[type] : null;
 
   if (!subject) {
     return NextResponse.json(
-      { error: "Invalid type. Use: eve, day, soon" },
+      { error: "Invalid type. Use: eve, day, soon. Optional: &seminar=survive|promo" },
       { status: 400 }
     );
   }
@@ -31,7 +33,12 @@ export async function GET(req: NextRequest) {
 
   for (const p of participants) {
     try {
-      await sendReminderEmail({ to: p.email, name: p.name, subject });
+      await sendReminderEmail({
+        to: p.email,
+        name: p.name,
+        subject,
+        seminarType: seminar,
+      });
       sent++;
     } catch (err) {
       console.error(`Failed to send reminder to ${p.email}:`, err);
@@ -39,7 +46,7 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  console.log(`Reminder [${type}]: sent=${sent}, failed=${failed}`);
+  console.log(`Reminder [${seminar}/${type}]: sent=${sent}, failed=${failed}`);
 
-  return NextResponse.json({ type, sent, failed, total: participants.length });
+  return NextResponse.json({ seminar, type, sent, failed, total: participants.length });
 }

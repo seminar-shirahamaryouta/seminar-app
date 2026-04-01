@@ -7,7 +7,11 @@ import {
   incrementSeminarCount,
 } from "@/lib/airtable";
 import { appendToSheet } from "@/lib/google-sheets";
-import { sendConfirmationEmail, sendAdminNotification } from "@/lib/email";
+import {
+  sendConfirmationEmail,
+  sendAdminNotification,
+  type SeminarType,
+} from "@/lib/email";
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -49,17 +53,21 @@ export async function POST(req: NextRequest) {
     const clientRef = (session.client_reference_id || "").toLowerCase();
     let seminarName: string;
     let referralSource: string;
+    let seminarType: SeminarType;
 
     if (clientRef === "survive2026") {
       seminarName = "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー";
       referralSource = "SURVIVE 2026経由";
+      seminarType = "promo";
     } else if (clientRef === "general" || clientRef === "promo2026") {
       seminarName = "プロモートビジネスセミナー入門編";
       referralSource = "一般申込";
+      seminarType = "promo";
     } else {
       // デフォルト: 4/8セミナー（フォーム経由の申込）
       seminarName = "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー";
       referralSource = metadata.referral || "";
+      seminarType = "survive";
     }
 
     const customerData = {
@@ -94,11 +102,13 @@ export async function POST(req: NextRequest) {
       sendConfirmationEmail({
         to: customerData.email,
         name: customerData.name,
+        seminarType,
       }),
       sendAdminNotification({
         name: customerData.name,
         email: customerData.email,
         appliedAt: now,
+        seminarType,
       }),
     ]);
 
