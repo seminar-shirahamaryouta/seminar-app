@@ -166,7 +166,7 @@ export default function Home() {
           </h2>
           <div className="space-y-3 text-sm text-neutral-300">
             <p>
-              ・事前にスケジュールを確保し、カメラオンで集中して参加できる方のみ
+              ・事前にスケジュールを確保し、集中して参加できる方のみ
             </p>
             <p>・アーカイブはありません</p>
             <p className="text-white mt-6">
