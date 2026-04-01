@@ -204,7 +204,7 @@ export default function PromoSeminar2026() {
         {/* CTA */}
         <div className="text-center">
           <a
-            href="#"
+            href="https://buy.stripe.com/28E8wO73S4gi2jtc57ao800"
             className="inline-block w-full max-w-md bg-white text-neutral-950 py-5 rounded-sm text-sm font-medium tracking-wider hover:bg-neutral-200 transition-colors"
           >
             席を確保する &rarr;
