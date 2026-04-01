@@ -4,6 +4,9 @@ export default function PromoSeminar2026() {
       <div className="max-w-2xl w-full">
         {/* Header */}
         <div className="text-center mb-20">
+          <p className="text-sm text-neutral-400 mb-8">
+            SURVIVE 2026 にご参加いただいた方への特別ご案内です。
+          </p>
           <p className="text-xs tracking-[0.3em] text-neutral-500 uppercase mb-6">
             Invitation Only
           </p>
@@ -11,21 +14,35 @@ export default function PromoSeminar2026() {
             プロモートビジネスセミナー入門編
           </h1>
           <p className="text-sm text-neutral-400 tracking-wider">
-            AI時代に、誰かの力を借りて大きく動く。
+            AIに代替されない働き方
           </p>
         </div>
 
         {/* Main Copy */}
         <div className="space-y-10 mb-24 text-[15px] leading-[2] text-neutral-200">
           <div className="space-y-6">
-            <p className="text-xl md:text-2xl font-light text-white leading-relaxed">
-              「自分が商品にならなくていい。」
+            <p>着実に蓄積しながら、AIに代替されないビジネスを学びませんか？</p>
+
+            <p>
+              誰でも簡単に、短期間で稼げる——
+              <br />
+              そのような安易なことはお伝えしません。
+              <br />
+              そんな方法は、ありません。
             </p>
-            <p className="text-xl md:text-2xl font-light text-white leading-relaxed">
-              「AIを使いこなせなくてもいい。」
+
+            <p>
+              市場やプラットフォームのトレンドで一時的に稼げたとしても、
+              <br />
+              流行りの手法やテクニックは、
+              <br />
+              どれだけ努力して身につけても、
+              <br />
+              半年後には使えなくなります。
             </p>
-            <p className="text-xl md:text-2xl font-light text-white leading-relaxed">
-              「一流の人と組んで、プロデュースする側に回る。」
+
+            <p className="text-lg italic text-white">
+              永遠とショートを繰り返すことになる。
             </p>
           </div>
 
