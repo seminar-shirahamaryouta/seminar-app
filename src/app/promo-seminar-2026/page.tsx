@@ -1,4 +1,36 @@
+"use client";
+
+import { useState } from "react";
+
 export default function PromoSeminar2026() {
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+    const formData = new FormData(e.currentTarget);
+    try {
+      const res = await fetch("/api/promo-register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+        }),
+      });
+      const data = await res.json();
+      if (data.redirect) {
+        window.location.href = data.redirect;
+      } else {
+        alert("エラーが発生しました。もう一度お試しください。");
+        setLoading(false);
+      }
+    } catch {
+      alert("エラーが発生しました。もう一度お試しください。");
+      setLoading(false);
+    }
+  }
+
   return (
     <main className="min-h-screen flex items-center justify-center px-4 py-20">
       <div className="max-w-2xl w-full">
@@ -157,8 +189,8 @@ export default function PromoSeminar2026() {
                 参加費
               </dt>
               <dd className="text-white text-2xl font-light">
-                ¥TBD
-                <span className="text-sm text-neutral-400 ml-1">（税込）</span>
+                無料
+                <span className="text-sm text-neutral-400 ml-1">（SURVIVE 2026参加者限定）</span>
               </dd>
             </div>
             <div className="flex flex-col sm:flex-row sm:gap-8">
@@ -170,24 +202,16 @@ export default function PromoSeminar2026() {
           </dl>
         </div>
 
-        {/* Special Offer */}
+        {/* 無料招待案内 */}
         <div className="bg-neutral-800 border border-neutral-600 rounded-sm p-10 mb-10">
           <p className="text-xs tracking-[0.2em] text-amber-400/80 uppercase mb-4">
             SURVIVE 2026 参加者限定
           </p>
-          <p className="text-sm text-neutral-300 leading-relaxed mb-6">
-            Stripe決済画面でクーポンコードを入力すると
-            <span className="text-white font-medium"> ¥2,026引き </span>
-            になります。
+          <p className="text-sm text-neutral-300 leading-relaxed">
+            通常¥2,026のセミナーを、SURVIVE 2026参加者限定で
+            <span className="text-white font-medium">無料</span>
+            でご招待します。
           </p>
-          <div className="bg-neutral-950 border border-neutral-700 rounded-sm px-6 py-4 flex items-center justify-between">
-            <code className="text-xl md:text-2xl font-mono tracking-widest text-white">
-              SURVIVE2026
-            </code>
-            <span className="text-xs text-neutral-500 shrink-0 ml-4">
-              coupon code
-            </span>
-          </div>
         </div>
 
         {/* Notes */}
@@ -201,14 +225,52 @@ export default function PromoSeminar2026() {
           </div>
         </div>
 
-        {/* CTA */}
-        <div className="text-center">
-          <a
-            href="https://buy.stripe.com/28E8wO73S4gi2jtc57ao800?client_reference_id=survive2026"
-            className="inline-block w-full max-w-md bg-white text-neutral-950 py-5 rounded-sm text-sm font-medium tracking-wider hover:bg-neutral-200 transition-colors"
-          >
-            席を確保する &rarr;
-          </a>
+        {/* 申し込みフォーム */}
+        <div className="bg-neutral-900 border border-neutral-800 rounded-sm p-10">
+          <h2 className="text-center text-lg font-light tracking-wide mb-10 text-neutral-200">
+            無料で参加申し込み
+          </h2>
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-xs tracking-wider text-neutral-500 mb-2"
+              >
+                お名前 <span className="text-neutral-600">*</span>
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                className="w-full bg-neutral-950 border border-neutral-800 rounded-sm px-4 py-3 text-sm text-neutral-100 placeholder-neutral-700 focus:outline-none focus:border-neutral-600 transition-colors"
+                placeholder="山田 太郎"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-xs tracking-wider text-neutral-500 mb-2"
+              >
+                メールアドレス <span className="text-neutral-600">*</span>
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                className="w-full bg-neutral-950 border border-neutral-800 rounded-sm px-4 py-3 text-sm text-neutral-100 placeholder-neutral-700 focus:outline-none focus:border-neutral-600 transition-colors"
+                placeholder="taro@example.com"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full mt-4 bg-white text-neutral-950 py-4 rounded-sm text-sm font-medium tracking-wider hover:bg-neutral-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+              {loading ? "処理中..." : "無料で申し込む →"}
+            </button>
+          </form>
         </div>
 
         {/* Footer */}

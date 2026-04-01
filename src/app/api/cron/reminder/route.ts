@@ -15,19 +15,26 @@ export async function GET(req: NextRequest) {
   }
 
   const type = req.nextUrl.searchParams.get("type");
-  const seminar = (req.nextUrl.searchParams.get("seminar") || "survive") as SeminarType;
+  const seminar = (req.nextUrl.searchParams.get("seminar") ||
+    "survive") as SeminarType;
 
   const reminders = seminar === "promo" ? REMINDERS_PROMO : REMINDERS_SURVIVE;
   const subject = type ? reminders[type] : null;
 
   if (!subject) {
     return NextResponse.json(
-      { error: "Invalid type. Use: eve, day, soon. Optional: &seminar=survive|promo" },
+      {
+        error:
+          "Invalid type. Use: eve, day, soon. Optional: &seminar=survive|promo",
+      },
       { status: 400 }
     );
   }
 
-  const participants = await getParticipants();
+  // survive → completed のみ、promo → 無料招待 のみ
+  const statusFilter = seminar === "promo" ? "無料招待" : "completed";
+  const participants = await getParticipants(statusFilter);
+
   let sent = 0;
   let failed = 0;
 
@@ -48,5 +55,11 @@ export async function GET(req: NextRequest) {
 
   console.log(`Reminder [${seminar}/${type}]: sent=${sent}, failed=${failed}`);
 
-  return NextResponse.json({ seminar, type, sent, failed, total: participants.length });
+  return NextResponse.json({
+    seminar,
+    type,
+    sent,
+    failed,
+    total: participants.length,
+  });
 }

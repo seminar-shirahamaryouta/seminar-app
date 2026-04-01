@@ -214,16 +214,23 @@ interface Participant {
   email: string;
 }
 
-export async function getParticipants(): Promise<Participant[]> {
+export async function getParticipants(
+  statusFilter?: string
+): Promise<Participant[]> {
   const participants: Participant[] = [];
   let offset: string | undefined;
 
+  const formula = statusFilter
+    ? `{決済ステータス} = "${statusFilter}"`
+    : 'OR({決済ステータス} = "completed", {決済ステータス} = "無料招待")';
+
   do {
     const params = new URLSearchParams({
-      filterByFormula: '{決済ステータス} = "completed"',
+      filterByFormula: formula,
       "fields[]": "名前",
     });
     params.append("fields[]", "メールアドレス");
+    params.append("fields[]", "決済ステータス");
     if (offset) params.set("offset", offset);
 
     const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}?${params}`;

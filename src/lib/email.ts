@@ -193,6 +193,19 @@ export const REMINDERS_PROMO: Record<string, string> = {
   soon: "【30分後開始】プロモートビジネスセミナー入門編",
 };
 
+// --- 日時フォーマット ---
+
+export function formatJST(iso: string): string {
+  const d = new Date(iso);
+  const jst = new Date(d.getTime() + 9 * 60 * 60 * 1000);
+  const y = jst.getFullYear();
+  const m = jst.getMonth() + 1;
+  const day = jst.getDate();
+  const h = String(jst.getHours()).padStart(2, "0");
+  const min = String(jst.getMinutes()).padStart(2, "0");
+  return `${y}年${m}月${day}日 ${h}:${min}`;
+}
+
 // --- 管理者通知 ---
 
 interface SendAdminNotificationParams {
@@ -210,6 +223,7 @@ export async function sendAdminNotification({
 }: SendAdminNotificationParams) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   const info = getSeminarInfo(seminarType);
+  const appliedAtJST = formatJST(appliedAt);
 
   await resend.emails.send({
     from: `${info.organizer} <info@promote-business.academy>`,
@@ -233,7 +247,7 @@ export async function sendAdminNotification({
           </tr>
           <tr style="border-bottom: 1px solid #eee;">
             <td style="padding: 8px; font-weight: bold;">申込日時</td>
-            <td style="padding: 8px;">${appliedAt}</td>
+            <td style="padding: 8px;">${appliedAtJST}</td>
           </tr>
         </table>
       </div>
