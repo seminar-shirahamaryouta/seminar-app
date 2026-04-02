@@ -131,7 +131,7 @@ export default function Home() {
                 日時
               </dt>
               <dd className="text-neutral-200">
-                2026年4月8日（金）20:00〜22:00
+                2026年4月8日（水）20:00〜22:00
                 <br />
                 <span className="text-neutral-500 text-xs">
                   ※開始5分前にはご入室ください
