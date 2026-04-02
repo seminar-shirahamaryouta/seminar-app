@@ -14,7 +14,7 @@ function inviteHtml(name: string) {
       <hr style="margin: 24px 0; border: none; border-top: 1px solid #eee;" />
 
       <p style="margin: 0;">
-        <strong>4月10日（金）20:00〜22:30</strong><br>
+        <strong>4月14日（火）20:00〜22:30</strong><br>
         <span style="font-size: 18px;">「プロモートビジネスセミナー入門編」</span>
       </p>
 
@@ -62,7 +62,7 @@ export async function GET(req: NextRequest) {
       await resend.emails.send({
         from: "SURVIVE 2026 <info@promote-business.academy>",
         to: p.email,
-        subject: "【参加者限定】4月10日セミナーへの無料ご招待",
+        subject: "【参加者限定】4月14日セミナーへの無料ご招待",
         html: inviteHtml(p.name),
       });
       sent++;

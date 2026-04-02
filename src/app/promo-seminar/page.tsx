@@ -133,7 +133,7 @@ export default function PromoSeminar() {
                 日時
               </dt>
               <dd className="text-neutral-200">
-                2026年4月10日（金）20:00〜22:30
+                2026年4月14日（火）20:00〜22:30
                 <br />
                 <span className="text-neutral-500 text-xs">
                   ※開始5分前にはご入室ください

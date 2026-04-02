@@ -13,11 +13,11 @@ const ZOOM_PROMO = {
   meetingId: "830 3955 2812",
 };
 
-// --- 4/10セミナー設定 ---
+// --- 4/14セミナー設定 ---
 
 const PROMO_SEMINAR = {
   title: "プロモートビジネスセミナー入門編",
-  date: "2026年4月10日（金）",
+  date: "2026年4月14日（火）",
   time: "20:00〜22:30",
   organizer: "Promote Business Seminar",
   contactEmail: "info@promote-business.academy",

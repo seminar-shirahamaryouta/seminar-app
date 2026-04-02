@@ -137,7 +137,7 @@ const SEMINAR_DEFAULTS: Record<string, SeminarDefaults> = {
   },
   "プロモートビジネスセミナー入門編": {
     name: "プロモートビジネスセミナー入門編",
-    dateTime: "2026-04-10T20:00:00.000Z",
+    dateTime: "2026-04-14T20:00:00.000Z",
     price: 0,
   },
 };

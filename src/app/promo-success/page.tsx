@@ -34,7 +34,7 @@ export default function PromoSuccessPage() {
                 日時
               </dt>
               <dd className="text-neutral-200">
-                2026年4月10日（金）20:00〜22:30
+                2026年4月14日（火）20:00〜22:30
               </dd>
             </div>
             <div className="flex flex-col sm:flex-row sm:gap-8">

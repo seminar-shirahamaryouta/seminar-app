@@ -100,7 +100,7 @@ async function sendPromoConfirmation(to: string, name: string) {
           </tr>
           <tr style="border-bottom: 1px solid #eee;">
             <td style="padding: 8px; font-weight: bold;">日時</td>
-            <td style="padding: 8px;">2026年4月10日（金） 20:00〜22:30</td>
+            <td style="padding: 8px;">2026年4月14日（火） 20:00〜22:30</td>
           </tr>
           <tr style="border-bottom: 1px solid #eee;">
             <td style="padding: 8px; font-weight: bold;">開催方法</td>

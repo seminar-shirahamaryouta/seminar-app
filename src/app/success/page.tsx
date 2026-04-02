@@ -29,7 +29,7 @@ export default function SuccessPage() {
           <div className="space-y-4 text-sm text-neutral-800 leading-relaxed mb-8">
             <p>
               <span className="text-neutral-950 font-medium">
-                4月10日（金）20:00〜22:30
+                4月14日（火）20:00〜22:30
               </span>
               <br />
               <span className="text-base text-neutral-950 font-medium">
