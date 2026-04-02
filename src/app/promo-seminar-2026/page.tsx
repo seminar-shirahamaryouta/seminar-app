@@ -2,13 +2,23 @@
 
 import { useState } from "react";
 
+const REFERRAL_SOURCES = [
+  "ハマーのメルマガ・LINE",
+  "いれぶん塾での紹介",
+  "AI Dreamers Productionのメルマガ",
+  "知人・友人からの紹介",
+  "その他",
+];
+
 export default function PromoSeminar2026() {
   const [loading, setLoading] = useState(false);
+  const [selectedReferral, setSelectedReferral] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.currentTarget);
+    const referral = formData.get("referral") as string;
     try {
       const res = await fetch("/api/promo-register", {
         method: "POST",
@@ -16,6 +26,11 @@ export default function PromoSeminar2026() {
         body: JSON.stringify({
           name: formData.get("name"),
           email: formData.get("email"),
+          referral:
+            referral === "その他"
+              ? `その他: ${formData.get("referralOther") as string}`
+              : referral,
+          question: (formData.get("question") as string) || "",
         }),
       });
       const data = await res.json();
@@ -263,6 +278,59 @@ export default function PromoSeminar2026() {
                 placeholder="taro@example.com"
               />
             </div>
+            <fieldset>
+              <legend className="block text-xs tracking-wider text-neutral-500 mb-3">
+                このセミナーをどこでお知りになりましたか？{" "}
+                <span className="text-neutral-600">*</span>
+              </legend>
+              <div className="space-y-2">
+                {REFERRAL_SOURCES.map((option) => (
+                  <label
+                    key={option}
+                    className="flex items-center gap-3 px-4 py-3 border border-neutral-800 rounded-sm cursor-pointer hover:border-neutral-600 has-[:checked]:border-neutral-500 has-[:checked]:bg-neutral-800/50 transition-colors"
+                  >
+                    <input
+                      type="radio"
+                      name="referral"
+                      value={option}
+                      required
+                      onChange={() => setSelectedReferral(option)}
+                      className="appearance-none w-3.5 h-3.5 border border-neutral-600 rounded-full checked:border-white checked:bg-white checked:shadow-[inset_0_0_0_2px_#171717] shrink-0 transition-colors"
+                    />
+                    <span className="text-sm text-neutral-200">{option}</span>
+                  </label>
+                ))}
+              </div>
+              {selectedReferral === "その他" && (
+                <input
+                  type="text"
+                  name="referralOther"
+                  required
+                  className="w-full mt-2 bg-neutral-950 border border-neutral-800 rounded-sm px-4 py-3 text-sm text-neutral-100 placeholder-neutral-700 focus:outline-none focus:border-neutral-600 transition-colors"
+                  placeholder="紹介者名・媒体名などをご記入ください"
+                />
+              )}
+            </fieldset>
+
+            <div>
+              <label
+                htmlFor="question"
+                className="block text-xs tracking-wider text-neutral-500 mb-2"
+              >
+                当日聞きたいこと
+              </label>
+              <textarea
+                id="question"
+                name="question"
+                rows={3}
+                className="w-full bg-neutral-950 border border-neutral-800 rounded-sm px-4 py-3 text-sm text-neutral-100 placeholder-neutral-700 focus:outline-none focus:border-neutral-600 transition-colors resize-none"
+                placeholder="自由にご記入ください"
+              />
+              <p className="text-xs text-neutral-600 mt-1.5">
+                ※すべてのご質問にお答えできない場合があります。
+              </p>
+            </div>
+
             <button
               type="submit"
               disabled={loading}

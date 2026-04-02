@@ -9,7 +9,7 @@ import { formatJST } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email } = await req.json();
+    const { name, email, referral, question } = await req.json();
 
     if (!name || !email) {
       return NextResponse.json(
@@ -27,9 +27,9 @@ export async function POST(req: NextRequest) {
       email,
       businessType: "",
       situation: "",
-      referral: "SURVIVE2026参加者",
+      referral: referral || "SURVIVE2026参加者",
       referralOther: "",
-      question: "",
+      question: question || "",
       paymentStatus: "無料招待",
       stripeSessionId: "",
       appliedAt: now,
