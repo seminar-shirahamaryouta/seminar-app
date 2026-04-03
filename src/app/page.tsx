@@ -152,11 +152,6 @@ export default function Home() {
             </div>
           </dl>
 
-          <div className="mt-8 pt-8 border-t border-neutral-800 space-y-2 text-xs text-neutral-500">
-            <p>※現在コンサル契約中の方・PBA生は無料</p>
-            <p>クーポンコードをStripe決済画面で入力してください</p>
-            <p>※契約中の方は間違って決済しないようご注意ください。</p>
-          </div>
         </div>
 
         {/* Conditions */}
