@@ -13,6 +13,7 @@ interface CustomerRecord {
   paymentStatus: string;
   stripeSessionId: string;
   appliedAt: string;
+  seminarName?: string;
 }
 
 export async function addAirtableRecord(record: CustomerRecord) {
@@ -38,6 +39,7 @@ export async function addAirtableRecord(record: CustomerRecord) {
             決済ステータス: record.paymentStatus,
             "Stripe Session ID": record.stripeSessionId,
             申込日時: record.appliedAt,
+            セミナー名: record.seminarName || "",
           },
         },
       ],
@@ -215,14 +217,21 @@ interface Participant {
 }
 
 export async function getParticipants(
-  statusFilter?: string
+  statusFilter?: string,
+  seminarNameFilter?: string
 ): Promise<Participant[]> {
   const participants: Participant[] = [];
   let offset: string | undefined;
 
-  const formula = statusFilter
-    ? `{決済ステータス} = "${statusFilter}"`
-    : 'OR({決済ステータス} = "completed", {決済ステータス} = "無料招待")';
+  let formula: string;
+  if (seminarNameFilter) {
+    // セミナー名でフィルタ（決済ステータスに関わらず、そのセミナーの参加者を取得）
+    formula = `AND({セミナー名} = "${seminarNameFilter}", OR({決済ステータス} = "completed", {決済ステータス} = "無料招待"))`;
+  } else if (statusFilter) {
+    formula = `{決済ステータス} = "${statusFilter}"`;
+  } else {
+    formula = 'OR({決済ステータス} = "completed", {決済ステータス} = "無料招待")';
+  }
 
   do {
     const params = new URLSearchParams({

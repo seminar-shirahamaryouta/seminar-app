@@ -7,8 +7,12 @@ import {
   type SeminarType,
 } from "@/lib/email";
 
+const SEMINAR_NAMES: Record<SeminarType, string> = {
+  survive: "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー",
+  promo: "プロモートビジネスセミナー入門編",
+};
+
 export async function GET(req: NextRequest) {
-  // Verify cron secret to prevent unauthorized access
   const authHeader = req.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -31,9 +35,9 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  // survive → completed のみ、promo → 無料招待 のみ
-  const statusFilter = seminar === "promo" ? "無料招待" : "completed";
-  const participants = await getParticipants(statusFilter);
+  // セミナー名でフィルタして参加者を取得
+  const seminarName = SEMINAR_NAMES[seminar];
+  const participants = await getParticipants(undefined, seminarName);
 
   let sent = 0;
   let failed = 0;

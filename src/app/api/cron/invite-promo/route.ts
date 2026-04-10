@@ -52,7 +52,10 @@ export async function GET(req: NextRequest) {
   }
 
   const resend = new Resend(process.env.RESEND_API_KEY);
-  const participants = await getParticipants("completed");
+  const participants = await getParticipants(
+    undefined,
+    "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー"
+  );
 
   let sent = 0;
   let failed = 0;

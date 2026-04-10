@@ -38,30 +38,51 @@ export async function POST(req: NextRequest) {
     const session = event.data.object as Stripe.Checkout.Session;
     const metadata = session.metadata || {};
     const now = new Date().toISOString();
+    const clientRefRaw = session.client_reference_id || "";
+
+    // client_reference_id からメタデータをデコード
+    let promoMeta: {
+      name?: string;
+      email?: string;
+      referral?: string;
+      question?: string;
+    } = {};
+    const isGeneralPromo = clientRefRaw.toLowerCase().startsWith("general");
+    if (clientRefRaw.includes(":")) {
+      try {
+        const encoded = clientRefRaw.split(":").slice(1).join(":");
+        const decoded = Buffer.from(encoded, "base64url").toString("utf-8");
+        promoMeta = JSON.parse(decoded);
+      } catch {
+        console.warn("[Webhook] Failed to decode client_reference_id metadata");
+      }
+    }
 
     // name/emailのフォールバック
     const name =
       metadata.name ||
+      promoMeta.name ||
       session.customer_details?.name ||
       "";
     const email =
       metadata.email ||
+      promoMeta.email ||
       session.customer_details?.email ||
       "";
 
     // セミナー判別
-    const clientRef = (session.client_reference_id || "").toLowerCase();
+    const clientRefLower = clientRefRaw.toLowerCase();
     let seminarName: string;
     let referralSource: string;
     let seminarType: SeminarType;
 
-    if (clientRef === "survive2026") {
+    if (clientRefLower.startsWith("survive2026")) {
       seminarName = "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー";
       referralSource = "SURVIVE 2026経由";
       seminarType = "promo";
-    } else if (clientRef === "general" || clientRef === "promo2026") {
+    } else if (isGeneralPromo || clientRefLower === "promo2026") {
       seminarName = "プロモートビジネスセミナー入門編";
-      referralSource = "一般申込";
+      referralSource = promoMeta.referral || "一般申込";
       seminarType = "promo";
     } else {
       // デフォルト: 4/8セミナー（フォーム経由の申込）
@@ -75,12 +96,13 @@ export async function POST(req: NextRequest) {
       email,
       businessType: metadata.businessType || "",
       situation: metadata.situation || "",
-      referral: metadata.referral || "",
+      referral: promoMeta.referral || metadata.referral || referralSource,
       referralOther: metadata.referralOther || "",
-      question: metadata.question || "",
+      question: promoMeta.question || metadata.question || "",
       paymentStatus: "completed",
       stripeSessionId: session.id,
       appliedAt: now,
+      seminarName,
     };
 
     const results = await Promise.allSettled([
@@ -124,13 +146,21 @@ export async function POST(req: NextRequest) {
       if (result.status === "rejected") {
         console.error(`[Webhook] ${services[index]} failed:`, {
           service: services[index],
-          error: result.reason instanceof Error ? result.reason.message : result.reason,
-          stack: result.reason instanceof Error ? result.reason.stack : undefined,
+          error:
+            result.reason instanceof Error
+              ? result.reason.message
+              : result.reason,
+          stack:
+            result.reason instanceof Error
+              ? result.reason.stack
+              : undefined,
           customerEmail: customerData.email,
           sessionId: session.id,
         });
       } else {
-        console.log(`[Webhook] ${services[index]} succeeded for session ${session.id}`);
+        console.log(
+          `[Webhook] ${services[index]} succeeded for session ${session.id}`
+        );
       }
     });
   }

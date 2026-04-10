@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { addAirtableRecord, upsertCustomer, incrementSeminarCount } from "@/lib/airtable";
 
-const STRIPE_PAYMENT_LINK =
-  "https://buy.stripe.com/28E8wO73S4gi2jtc57ao800?client_reference_id=general";
+const STRIPE_PAYMENT_LINK_BASE =
+  "https://buy.stripe.com/28E8wO73S4gi2jtc57ao800";
 
 export async function POST(req: NextRequest) {
   try {
@@ -15,39 +14,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const now = new Date().toISOString();
+    // client_reference_idにメタデータをエンコードして渡す
+    const metadata = JSON.stringify({ name, email, referral, question: question || "" });
+    const clientRefId = `general:${Buffer.from(metadata).toString("base64url")}`;
 
-    // Airtableに事前記録（決済前）
-    const customerData = {
-      name,
-      email,
-      businessType: "",
-      situation: "",
-      referral,
-      referralOther: "",
-      question: question || "",
-      paymentStatus: "決済待ち",
-      stripeSessionId: "",
-      appliedAt: now,
-    };
+    const url = `${STRIPE_PAYMENT_LINK_BASE}?client_reference_id=${encodeURIComponent(clientRefId)}&prefilled_email=${encodeURIComponent(email)}`;
 
-    const results = await Promise.allSettled([
-      addAirtableRecord(customerData),
-      upsertCustomer(customerData, "一般申込"),
-      incrementSeminarCount("プロモートビジネスセミナー入門編"),
-    ]);
-
-    const services = ["Airtable(参加者管理)", "Airtable(Customers)", "Airtable(Seminars)"];
-    results.forEach((result, index) => {
-      if (result.status === "rejected") {
-        console.error(`[CheckoutPromo] ${services[index]} failed:`, {
-          error: result.reason instanceof Error ? result.reason.message : result.reason,
-          email,
-        });
-      }
-    });
-
-    return NextResponse.json({ url: STRIPE_PAYMENT_LINK });
+    return NextResponse.json({ url });
   } catch (err) {
     console.error("CheckoutPromo error:", err);
     return NextResponse.json(

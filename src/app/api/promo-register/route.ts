@@ -33,6 +33,7 @@ export async function POST(req: NextRequest) {
       paymentStatus: "無料招待",
       stripeSessionId: "",
       appliedAt: now,
+      seminarName: "プロモートビジネスセミナー入門編",
     };
 
     const results = await Promise.allSettled([
