@@ -263,5 +263,12 @@ export async function getParticipants(
     offset = data.offset;
   } while (offset);
 
-  return participants;
+  // メールアドレスで重複排除（最後に出現したレコードを優先）
+  const seen = new Map<string, Participant>();
+  for (const p of participants) {
+    if (p.email) {
+      seen.set(p.email.toLowerCase(), p);
+    }
+  }
+  return Array.from(seen.values());
 }
