@@ -66,21 +66,37 @@ export default function PromoSeminar() {
         </div>
 
         {/* プロモートビジネスとは？ */}
-        <div className="bg-neutral-900 border border-neutral-800 rounded-sm p-10 mb-20">
-          <h2 className="text-xs tracking-[0.2em] text-neutral-500 uppercase mb-6">
+        <div className="mb-20">
+          <h2 className="text-xs tracking-[0.2em] text-neutral-500 uppercase mb-8 text-center">
             プロモートビジネスとは？
           </h2>
-          <div className="space-y-4 text-[15px] leading-[2] text-neutral-200">
+          <div className="text-center space-y-8 text-[15px] leading-[2] text-neutral-200">
             <p>
-              自分が商品にならず、一流の人とパートナーシップを組み
+              スマイルカーブの真ん中が消え、
               <br />
-              人のハブになるビジネスの立ち上げ方です。
-            </p>
-            <p>
-              AIが加速する時代に、代替されない働き方として
+              右端「顧客との深い関係」と
               <br />
-              今最も注目されているビジネスモデルです。
+              左端「企画・意思決定・ブランド」だけが残ります。
             </p>
+            <div className="py-8">
+              <img
+                src="/lp_smile_curve.png"
+                alt="スマイルカーブ：AIに置き換えられる領域と残る領域"
+                className="w-full max-w-2xl mx-auto rounded-lg"
+              />
+            </div>
+            <div className="space-y-4">
+              <p>
+                プロモートビジネスは、この両端を同時に手に入れる働き方です。
+                <br />
+                自分が商品にならず、一流の専門家とパートナーシップを組み、
+                <br />
+                顧客のハブになる。
+              </p>
+              <p className="text-white font-medium">
+                AIに代替されない生産手段を、自分の手に持つ最短ルートです。
+              </p>
+            </div>
           </div>
         </div>
 
@@ -183,7 +199,7 @@ export default function PromoSeminar() {
               </li>
               <li className="flex gap-3">
                 <span className="text-neutral-600 shrink-0">—</span>
-                <span>会社員から副業で始めて28,000人を集客できるようになった事例</span>
+                <span>会社員から副業で始めて30,000人を集客できるようになった事例</span>
               </li>
               <li className="flex gap-3">
                 <span className="text-neutral-600 shrink-0">—</span>

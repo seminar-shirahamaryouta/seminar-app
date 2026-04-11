@@ -164,7 +164,7 @@ export default function PromoSeminar2026() {
               </li>
               <li className="flex gap-3">
                 <span className="text-neutral-600 shrink-0">—</span>
-                <span>会社員から副業で始めて28,000人を集客できるようになった事例</span>
+                <span>会社員から副業で始めて30,000人を集客できるようになった事例</span>
               </li>
               <li className="flex gap-3">
                 <span className="text-neutral-600 shrink-0">—</span>
