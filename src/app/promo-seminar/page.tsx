@@ -20,7 +20,6 @@ export default function PromoSeminar() {
     const formData = new FormData(e.currentTarget);
     const referral = formData.get("referral") as string;
 
-    // Airtableに記録してからStripeへ
     try {
       const res = await fetch("/api/checkout-promo", {
         method: "POST",
@@ -33,7 +32,8 @@ export default function PromoSeminar() {
               ? `その他: ${formData.get("referralOther") as string}`
               : referral,
           referralOther:
-            (formData.get("pastAttendance") as string) === "はい（参加したことがある）"
+            (formData.get("pastAttendance") as string) ===
+            "はい（参加したことがある）"
               ? "再参加"
               : "初参加",
           question: (formData.get("question") as string) || "",
@@ -55,22 +55,40 @@ export default function PromoSeminar() {
   return (
     <main className="min-h-screen flex items-center justify-center px-4 py-20">
       <div className="max-w-2xl w-full">
-        {/* Header */}
-        <div className="text-center mb-20">
+        {/* 1. ヒーロー */}
+        <div className="text-center mb-16">
           <h1 className="text-3xl md:text-4xl font-light tracking-wide leading-relaxed mb-4">
             プロモートビジネスセミナー入門編
           </h1>
           <p className="text-sm text-neutral-400 tracking-wider">
-            AIに代替されない働き方
+            2026年4月14日（火）20:00〜22:30｜オンライン（Zoom）｜¥2,026
           </p>
         </div>
 
-        {/* プロモートビジネスとは？ */}
-        <div className="mb-20">
-          <h2 className="text-xs tracking-[0.2em] text-neutral-500 uppercase mb-8 text-center">
+        {/* 2. 問いかけ */}
+        <div className="text-center py-12">
+          <p className="text-2xl font-light text-white leading-relaxed">
+            消えていくポジションで、
+            <br />
+            努力し続けていませんか？
+          </p>
+        </div>
+
+        {/* 3. スマイルカーブ画像 */}
+        <div className="py-8 flex justify-center">
+          <img
+            src="/lp_smile_curve.png"
+            alt="スマイルカーブ：AIに置き換えられる領域と残る領域"
+            className="w-full max-w-[800px] rounded-lg"
+          />
+        </div>
+
+        {/* 4. プロモートビジネスとは？ */}
+        <div className="py-16">
+          <h2 className="text-2xl font-bold text-white mb-8">
             プロモートビジネスとは？
           </h2>
-          <div className="text-center space-y-8 text-[15px] leading-[2] text-neutral-200">
+          <div className="space-y-6 text-[15px] leading-[2] text-neutral-300">
             <p>
               スマイルカーブの真ん中が消え、
               <br />
@@ -78,33 +96,27 @@ export default function PromoSeminar() {
               <br />
               左端「企画・意思決定・ブランド」だけが残ります。
             </p>
-            <div className="py-8">
-              <img
-                src="/lp_smile_curve.png"
-                alt="スマイルカーブ：AIに置き換えられる領域と残る領域"
-                className="w-full max-w-2xl mx-auto rounded-lg"
-              />
-            </div>
-            <div className="space-y-4">
-              <p>
-                プロモートビジネスは、この両端を同時に手に入れる働き方です。
-                <br />
-                自分が商品にならず、一流の専門家とパートナーシップを組み、
-                <br />
-                顧客のハブになる。
-              </p>
-              <p className="text-white font-medium">
-                AIに代替されない生産手段を、自分の手に持つ最短ルートです。
-              </p>
-            </div>
+            <p>
+              プロモートビジネスは、この両端を同時に手に入れる働き方です。
+              <br />
+              自分が商品にならず、一流の専門家とパートナーシップを組み、
+              <br />
+              顧客のハブになる。
+            </p>
+            <p className="text-white font-medium">
+              AIに代替されない生産手段を、自分の手に持つ最短ルートです。
+            </p>
           </div>
         </div>
 
-        {/* Main Copy */}
-        <div className="space-y-10 mb-24 text-[15px] leading-[2] text-neutral-200">
-          <div className="space-y-6">
-            <p>着実に蓄積しながら、AIに代替されないビジネスを学びませんか？</p>
+        <div className="border-t border-neutral-800" />
 
+        {/* 5. 注意書き */}
+        <div className="py-16">
+          <h2 className="text-2xl font-bold text-white mb-8">
+            このセミナーは、魔法の手法をお伝えする場ではありません。
+          </h2>
+          <div className="space-y-6 text-[15px] leading-[2] text-neutral-300">
             <p>
               誰でも簡単に、短期間で稼げる——
               <br />
@@ -112,109 +124,129 @@ export default function PromoSeminar() {
               <br />
               そんな方法は、ありません。
             </p>
-
             <p>
-              市場やプラットフォームのトレンドで一時的に稼げたとしても、
+              流行りの手法やテクニックは、どれだけ努力して身につけても、
               <br />
-              流行りの手法やテクニックは、
+              半年後には使えなくなります。
               <br />
-              どれだけ努力して身につけても、
-              <br />
-              一年後、いや時代の変化の早い今は、半年後には使えなくなります。
+              それでも次々と新しい手法を追いかけ続けることになる。
             </p>
-
-            <p>それでも、次々と新しい手法を追いかけ続けることになる。</p>
-
             <p className="text-lg italic text-white">
               永遠とショートを繰り返すことになる。
             </p>
-          </div>
-
-          <div className="border-t border-neutral-800" />
-
-          {/* こんな方へ */}
-          <div>
-            <p className="text-xs tracking-[0.2em] text-neutral-500 uppercase mb-6">
-              こんな方へ
+            <p>
+              着実に蓄積しながら、AIに代替されないビジネスを一緒に考えましょう。
             </p>
-            <ul className="space-y-3 pl-1">
-              <li className="flex gap-3">
-                <span className="text-neutral-600 shrink-0">—</span>
-                <span>起業・副業をしたいが、売れる「強み」や「経験」が見つからない方</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-neutral-600 shrink-0">—</span>
-                <span>集客が減り、新しい方向性を探している講師・コンサル・カウンセラーの方</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-neutral-600 shrink-0">—</span>
-                <span>流行りの手法を試してきたが、なかなか結果が出ていない方</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-neutral-600 shrink-0">—</span>
-                <span>自分がいなくてもビジネスが回る仕組みを手に入れたい方</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-neutral-600 shrink-0">—</span>
-                <span>持ち出し資金を抑えながら、大きなビジネスをしたい方</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-neutral-600 shrink-0">—</span>
-                <span>AIを活用した新しいビジネスの形を探している方</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-neutral-600 shrink-0">—</span>
-                <span>友人や家族に堂々と語れる、誇れるビジネスをしたい方</span>
-              </li>
-            </ul>
-          </div>
-
-          <div className="border-t border-neutral-800" />
-
-          {/* 当日お伝えすること */}
-          <div>
-            <p className="text-xs tracking-[0.2em] text-neutral-500 uppercase mb-6">
-              当日お伝えすること
-            </p>
-            <ul className="space-y-3 pl-1">
-              <li className="flex gap-3">
-                <span className="text-neutral-600 shrink-0">—</span>
-                <span>AI時代における「プロモートビジネス」の全体像</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-neutral-600 shrink-0">—</span>
-                <span>生産手段を持たずに戦う人が消えていく理由</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-neutral-600 shrink-0">—</span>
-                <span>一流の人とパートナーシップを組む具体的な方法</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-neutral-600 shrink-0">—</span>
-                <span>後発でも圧倒的に差をつけるポジション戦略</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-neutral-600 shrink-0">—</span>
-                <span>AIを使った新しいマネタイズの方法</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-neutral-600 shrink-0">—</span>
-                <span>会社員から副業で始めて30,000人を集客できるようになった事例</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-neutral-600 shrink-0">—</span>
-                <span>流行りに左右されない、未来に向けて資産を蓄積できるビジネス構築思考</span>
-              </li>
-            </ul>
           </div>
         </div>
 
-        {/* Seminar Details */}
-        <div className="bg-neutral-900 border border-neutral-800 rounded-sm p-10 mb-10">
-          <h2 className="text-xs tracking-[0.2em] text-neutral-500 uppercase mb-8">
-            セミナー詳細
-          </h2>
+        <div className="border-t border-neutral-800" />
 
+        {/* 6. こんな方へ */}
+        <div className="py-16">
+          <h2 className="text-2xl font-bold text-white mb-8">こんな方へ</h2>
+          <ul className="space-y-3 pl-1">
+            <li className="flex gap-3">
+              <span className="text-neutral-600 shrink-0">—</span>
+              <span className="text-neutral-300">
+                起業・副業をしたいが、売れる「強み」や「経験」が見つからない方
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-neutral-600 shrink-0">—</span>
+              <span className="text-neutral-300">
+                集客が減り、新しい方向性を探している講師・コンサル・カウンセラーの方
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-neutral-600 shrink-0">—</span>
+              <span className="text-neutral-300">
+                流行りの手法を試してきたが、なかなか結果が出ていない方
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-neutral-600 shrink-0">—</span>
+              <span className="text-neutral-300">
+                自分がいなくてもビジネスが回る仕組みを手に入れたい方
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-neutral-600 shrink-0">—</span>
+              <span className="text-neutral-300">
+                持ち出し資金を抑えながら、大きなビジネスをしたい方
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-neutral-600 shrink-0">—</span>
+              <span className="text-neutral-300">
+                AIを活用した新しいビジネスの形を探している方
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-neutral-600 shrink-0">—</span>
+              <span className="text-neutral-300">
+                友人や家族に堂々と語れる、誇れるビジネスをしたい方
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="border-t border-neutral-800" />
+
+        {/* 7. 当日お伝えすること */}
+        <div className="py-16">
+          <h2 className="text-2xl font-bold text-white mb-8">
+            当日お伝えすること
+          </h2>
+          <ul className="space-y-3 pl-1">
+            <li className="flex gap-3">
+              <span className="text-neutral-600 shrink-0">—</span>
+              <span className="text-neutral-300">
+                AI時代における「プロモートビジネス」の全体像
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-neutral-600 shrink-0">—</span>
+              <span className="text-neutral-300">
+                生産手段を持たずに戦う人が消えていく理由
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-neutral-600 shrink-0">—</span>
+              <span className="text-neutral-300">
+                一流の人とパートナーシップを組む具体的な方法
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-neutral-600 shrink-0">—</span>
+              <span className="text-neutral-300">
+                後発でも圧倒的に差をつけるポジション戦略
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-neutral-600 shrink-0">—</span>
+              <span className="text-neutral-300">
+                AIを使った新しいマネタイズの方法
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-neutral-600 shrink-0">—</span>
+              <span className="text-neutral-300">
+                会社員から副業で始めて30,000人を集客できるようになった事例
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="text-neutral-600 shrink-0">—</span>
+              <span className="text-neutral-300">
+                流行りに左右されない、資産として蓄積できるビジネス構築思考
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        {/* 8. セミナー詳細 */}
+        <div className="bg-neutral-900 border border-neutral-800 rounded-sm p-10 mb-10">
+          <h2 className="text-2xl font-bold text-white mb-8">セミナー詳細</h2>
           <dl className="space-y-6 text-sm">
             <div className="flex flex-col sm:flex-row sm:gap-8">
               <dt className="text-neutral-500 w-32 shrink-0 mb-1 sm:mb-0">
@@ -232,7 +264,9 @@ export default function PromoSeminar() {
               <dt className="text-neutral-500 w-32 shrink-0 mb-1 sm:mb-0">
                 開催方法
               </dt>
-              <dd className="text-neutral-200">Zoom（申込後にURL送付）</dd>
+              <dd className="text-neutral-200">
+                Zoom（申込後にURLをメールでお送りします）
+              </dd>
             </div>
             <div className="flex flex-col sm:flex-row sm:gap-8">
               <dt className="text-neutral-500 w-32 shrink-0 mb-1 sm:mb-0">
@@ -249,25 +283,22 @@ export default function PromoSeminar() {
               </dt>
               <dd className="text-neutral-200">50名限定</dd>
             </div>
+            <div className="flex flex-col sm:flex-row sm:gap-8">
+              <dt className="text-neutral-500 w-32 shrink-0 mb-1 sm:mb-0">
+                注意事項
+              </dt>
+              <dd className="text-neutral-200">アーカイブはありません</dd>
+            </div>
           </dl>
         </div>
 
-        {/* Notes */}
-        <div className="bg-neutral-900 border border-neutral-800 rounded-sm p-10 mb-10">
-          <h2 className="text-xs tracking-[0.2em] text-neutral-500 uppercase mb-8">
-            ご注意事項
-          </h2>
-          <div className="space-y-3 text-sm text-neutral-300">
-            <p>・アーカイブはありません</p>
-          </div>
-        </div>
-
-        {/* 申し込みフォーム */}
+        {/* 9. 申し込みフォーム */}
         <div className="bg-neutral-900 border border-neutral-800 rounded-sm p-10">
           <h2 className="text-center text-lg font-light tracking-wide mb-10 text-neutral-200">
             参加申し込み
           </h2>
           <form onSubmit={handleSubmit} className="space-y-8">
+            {/* 名前 */}
             <div>
               <label
                 htmlFor="name"
@@ -285,6 +316,7 @@ export default function PromoSeminar() {
               />
             </div>
 
+            {/* メール */}
             <div>
               <label
                 htmlFor="email"
@@ -302,6 +334,7 @@ export default function PromoSeminar() {
               />
             </div>
 
+            {/* 流入経路 */}
             <fieldset>
               <legend className="block text-xs tracking-wider text-neutral-500 mb-3">
                 このセミナーをどこでお知りになりましたか？{" "}
@@ -336,33 +369,34 @@ export default function PromoSeminar() {
               )}
             </fieldset>
 
+            {/* 過去参加 */}
             <fieldset>
               <legend className="block text-xs tracking-wider text-neutral-500 mb-3">
                 過去にハマーのプロモートビジネスセミナーに参加したことがありますか？{" "}
                 <span className="text-neutral-600">*</span>
               </legend>
               <div className="space-y-2">
-                {[
-                  "はい（参加したことがある）",
-                  "いいえ（初めて）",
-                ].map((option) => (
-                  <label
-                    key={option}
-                    className="flex items-center gap-3 px-4 py-3 border border-neutral-800 rounded-sm cursor-pointer hover:border-neutral-600 has-[:checked]:border-neutral-500 has-[:checked]:bg-neutral-800/50 transition-colors"
-                  >
-                    <input
-                      type="radio"
-                      name="pastAttendance"
-                      value={option}
-                      required
-                      className="appearance-none w-3.5 h-3.5 border border-neutral-600 rounded-full checked:border-white checked:bg-white checked:shadow-[inset_0_0_0_2px_#171717] shrink-0 transition-colors"
-                    />
-                    <span className="text-sm text-neutral-200">{option}</span>
-                  </label>
-                ))}
+                {["はい（参加したことがある）", "いいえ（初めて）"].map(
+                  (option) => (
+                    <label
+                      key={option}
+                      className="flex items-center gap-3 px-4 py-3 border border-neutral-800 rounded-sm cursor-pointer hover:border-neutral-600 has-[:checked]:border-neutral-500 has-[:checked]:bg-neutral-800/50 transition-colors"
+                    >
+                      <input
+                        type="radio"
+                        name="pastAttendance"
+                        value={option}
+                        required
+                        className="appearance-none w-3.5 h-3.5 border border-neutral-600 rounded-full checked:border-white checked:bg-white checked:shadow-[inset_0_0_0_2px_#171717] shrink-0 transition-colors"
+                      />
+                      <span className="text-sm text-neutral-200">{option}</span>
+                    </label>
+                  )
+                )}
               </div>
             </fieldset>
 
+            {/* 当日聞きたいこと */}
             <div>
               <label
                 htmlFor="question"
