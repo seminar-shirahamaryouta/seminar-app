@@ -5,7 +5,7 @@ const STRIPE_PAYMENT_LINK_BASE =
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, referral, question } = await req.json();
+    const { name, email, referral, referralOther, question } = await req.json();
 
     if (!name || !email || !referral) {
       return NextResponse.json(
@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     }
 
     // client_reference_idにメタデータをエンコードして渡す
-    const metadata = JSON.stringify({ name, email, referral, question: question || "" });
+    const metadata = JSON.stringify({ name, email, referral, referralOther: referralOther || "", question: question || "" });
     const clientRefId = `general:${Buffer.from(metadata).toString("base64url")}`;
 
     const url = `${STRIPE_PAYMENT_LINK_BASE}?client_reference_id=${encodeURIComponent(clientRefId)}&prefilled_email=${encodeURIComponent(email)}`;

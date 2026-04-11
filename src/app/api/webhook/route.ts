@@ -45,6 +45,7 @@ export async function POST(req: NextRequest) {
       name?: string;
       email?: string;
       referral?: string;
+      referralOther?: string;
       question?: string;
     } = {};
     const isGeneralPromo = clientRefRaw.toLowerCase().startsWith("general");
@@ -97,7 +98,7 @@ export async function POST(req: NextRequest) {
       businessType: metadata.businessType || "",
       situation: metadata.situation || "",
       referral: promoMeta.referral || metadata.referral || referralSource,
-      referralOther: metadata.referralOther || "",
+      referralOther: promoMeta.referralOther || metadata.referralOther || "",
       question: promoMeta.question || metadata.question || "",
       paymentStatus: "completed",
       stripeSessionId: session.id,

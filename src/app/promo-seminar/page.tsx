@@ -32,6 +32,10 @@ export default function PromoSeminar() {
             referral === "その他"
               ? `その他: ${formData.get("referralOther") as string}`
               : referral,
+          referralOther:
+            (formData.get("pastAttendance") as string) === "はい（参加したことがある）"
+              ? "再参加"
+              : "初参加",
           question: (formData.get("question") as string) || "",
         }),
       });
@@ -59,6 +63,25 @@ export default function PromoSeminar() {
           <p className="text-sm text-neutral-400 tracking-wider">
             AIに代替されない働き方
           </p>
+        </div>
+
+        {/* プロモートビジネスとは？ */}
+        <div className="bg-neutral-900 border border-neutral-800 rounded-sm p-10 mb-20">
+          <h2 className="text-xs tracking-[0.2em] text-neutral-500 uppercase mb-6">
+            プロモートビジネスとは？
+          </h2>
+          <div className="space-y-4 text-[15px] leading-[2] text-neutral-200">
+            <p>
+              自分が商品にならず、一流の人とパートナーシップを組み
+              <br />
+              人のハブになるビジネスの立ち上げ方です。
+            </p>
+            <p>
+              AIが加速する時代に、代替されない働き方として
+              <br />
+              今最も注目されているビジネスモデルです。
+            </p>
+          </div>
         </div>
 
         {/* Main Copy */}
@@ -208,7 +231,7 @@ export default function PromoSeminar() {
               <dt className="text-neutral-500 w-32 shrink-0 mb-1 sm:mb-0">
                 定員
               </dt>
-              <dd className="text-neutral-200">15名限定</dd>
+              <dd className="text-neutral-200">50名限定</dd>
             </div>
           </dl>
         </div>
@@ -295,6 +318,33 @@ export default function PromoSeminar() {
                   placeholder="紹介者名・媒体名などをご記入ください"
                 />
               )}
+            </fieldset>
+
+            <fieldset>
+              <legend className="block text-xs tracking-wider text-neutral-500 mb-3">
+                過去にハマーのプロモートビジネスセミナーに参加したことがありますか？{" "}
+                <span className="text-neutral-600">*</span>
+              </legend>
+              <div className="space-y-2">
+                {[
+                  "はい（参加したことがある）",
+                  "いいえ（初めて）",
+                ].map((option) => (
+                  <label
+                    key={option}
+                    className="flex items-center gap-3 px-4 py-3 border border-neutral-800 rounded-sm cursor-pointer hover:border-neutral-600 has-[:checked]:border-neutral-500 has-[:checked]:bg-neutral-800/50 transition-colors"
+                  >
+                    <input
+                      type="radio"
+                      name="pastAttendance"
+                      value={option}
+                      required
+                      className="appearance-none w-3.5 h-3.5 border border-neutral-600 rounded-full checked:border-white checked:bg-white checked:shadow-[inset_0_0_0_2px_#171717] shrink-0 transition-colors"
+                    />
+                    <span className="text-sm text-neutral-200">{option}</span>
+                  </label>
+                ))}
+              </div>
             </fieldset>
 
             <div>
