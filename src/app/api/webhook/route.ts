@@ -86,10 +86,23 @@ export async function POST(req: NextRequest) {
       referralSource = promoMeta.referral || "一般申込";
       seminarType = "promo";
     } else {
-      // デフォルト: 4/8セミナー（フォーム経由の申込）
-      seminarName = "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー";
-      referralSource = metadata.referral || "";
-      seminarType = "survive";
+      // payment_link IDで判別
+      const paymentLinkId =
+        typeof session.payment_link === "string"
+          ? session.payment_link
+          : session.payment_link?.id || "";
+
+      if (paymentLinkId === "plink_1THTSPB9FN6DaHV2TtUQrXkT") {
+        // プロモートセミナーのPayment Link直接アクセス
+        seminarName = "プロモートビジネスセミナー入門編";
+        referralSource = "一般申込";
+        seminarType = "promo";
+      } else {
+        // デフォルト: 4/8セミナー（フォーム経由の申込）
+        seminarName = "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー";
+        referralSource = metadata.referral || "";
+        seminarType = "survive";
+      }
     }
 
     const customerData = {
