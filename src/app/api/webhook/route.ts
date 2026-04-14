@@ -61,7 +61,12 @@ export async function POST(req: NextRequest) {
     let referralSource: string;
     let seminarType: SeminarType;
 
-    if (clientRefLower.startsWith("survive2026")) {
+    if (clientRefLower === "survive0416") {
+      seminarName =
+        "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー（4/16開催）";
+      referralSource = metadata.referral || "";
+      seminarType = "survive0416";
+    } else if (clientRefLower.startsWith("survive2026")) {
       seminarName = "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー";
       referralSource = "SURVIVE 2026経由";
       seminarType = "promo";

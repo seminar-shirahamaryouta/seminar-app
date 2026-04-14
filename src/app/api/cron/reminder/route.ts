@@ -4,12 +4,21 @@ import {
   sendReminderEmail,
   REMINDERS_SURVIVE,
   REMINDERS_PROMO,
+  REMINDERS_SURVIVE_0416,
   type SeminarType,
 } from "@/lib/email";
 
 const SEMINAR_NAMES: Record<SeminarType, string> = {
   survive: "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー",
   promo: "プロモートビジネスセミナー入門編",
+  survive0416:
+    "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー（4/16開催）",
+};
+
+const REMINDERS_MAP: Record<SeminarType, Record<string, string>> = {
+  survive: REMINDERS_SURVIVE,
+  promo: REMINDERS_PROMO,
+  survive0416: REMINDERS_SURVIVE_0416,
 };
 
 export async function GET(req: NextRequest) {
@@ -22,14 +31,14 @@ export async function GET(req: NextRequest) {
   const seminar = (req.nextUrl.searchParams.get("seminar") ||
     "survive") as SeminarType;
 
-  const reminders = seminar === "promo" ? REMINDERS_PROMO : REMINDERS_SURVIVE;
+  const reminders = REMINDERS_MAP[seminar] || REMINDERS_SURVIVE;
   const subject = type ? reminders[type] : null;
 
   if (!subject) {
     return NextResponse.json(
       {
         error:
-          "Invalid type. Use: eve, day, soon. Optional: &seminar=survive|promo",
+          "Invalid type. Use: eve, day, soon. seminar: survive|promo|survive0416",
       },
       { status: 400 }
     );

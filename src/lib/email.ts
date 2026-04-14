@@ -13,6 +13,11 @@ const ZOOM_PROMO = {
   meetingId: "830 3955 2812",
 };
 
+const ZOOM_SURVIVE_0416 = {
+  url: "https://us02web.zoom.us/j/85194698603",
+  meetingId: "851 9469 8603",
+};
+
 // --- 4/14セミナー設定 ---
 
 const PROMO_SEMINAR = {
@@ -23,9 +28,19 @@ const PROMO_SEMINAR = {
   contactEmail: "info@promote-business.academy",
 };
 
+// --- 4/16セミナー設定 ---
+
+const SURVIVE_0416_SEMINAR = {
+  title: "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー",
+  date: "2026年4月16日（木）",
+  time: "20:00〜22:00",
+  organizer: "SURVIVE 2026",
+  contactEmail: "info@promote-business.academy",
+};
+
 // --- セミナー種別 ---
 
-export type SeminarType = "survive" | "promo";
+export type SeminarType = "survive" | "promo" | "survive0416";
 
 function getSeminarInfo(type: SeminarType) {
   if (type === "promo") {
@@ -36,6 +51,16 @@ function getSeminarInfo(type: SeminarType) {
       organizer: PROMO_SEMINAR.organizer,
       contactEmail: PROMO_SEMINAR.contactEmail,
       zoom: ZOOM_PROMO,
+    };
+  }
+  if (type === "survive0416") {
+    return {
+      title: SURVIVE_0416_SEMINAR.title,
+      date: SURVIVE_0416_SEMINAR.date,
+      time: SURVIVE_0416_SEMINAR.time,
+      organizer: SURVIVE_0416_SEMINAR.organizer,
+      contactEmail: SURVIVE_0416_SEMINAR.contactEmail,
+      zoom: ZOOM_SURVIVE_0416,
     };
   }
   return {
@@ -191,6 +216,12 @@ export const REMINDERS_PROMO: Record<string, string> = {
   eve: "【明日開催】プロモートビジネスセミナー入門編",
   day: "【本日開催】プロモートビジネスセミナー入門編",
   soon: "【30分後開始】プロモートビジネスセミナー入門編",
+};
+
+export const REMINDERS_SURVIVE_0416: Record<string, string> = {
+  eve: "【明日開催】SURVIVE 2026｜大淘汰時代のポジション再設計セミナー",
+  day: "【本日開催】SURVIVE 2026｜大淘汰時代のポジション再設計セミナー",
+  soon: "【30分後開始】SURVIVE 2026｜大淘汰時代のポジション再設計セミナー",
 };
 
 // --- 日時フォーマット ---
