@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getStripe } from "@/lib/stripe";
 
-const STRIPE_PAYMENT_LINK_BASE =
-  "https://buy.stripe.com/28E8wO73S4gi2jtc57ao800";
+const PROMO_PRICE_ID = "price_1THTIOB9FN6DaHV2Maqrxp9H";
 
 export async function POST(req: NextRequest) {
   try {
@@ -14,17 +14,33 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // client_reference_idにメタデータをエンコードして渡す
-    const metadata = JSON.stringify({ name, email, referral, referralOther: referralOther || "", question: question || "" });
-    const clientRefId = `general:${Buffer.from(metadata).toString("base64url")}`;
+    const session = await getStripe().checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price: PROMO_PRICE_ID,
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url: `${req.nextUrl.origin}/success`,
+      cancel_url: `${req.nextUrl.origin}/promo-seminar`,
+      customer_email: email,
+      client_reference_id: "general",
+      metadata: {
+        name,
+        email,
+        referral,
+        referralOther: referralOther || "",
+        question: question || "",
+      },
+    });
 
-    const url = `${STRIPE_PAYMENT_LINK_BASE}?client_reference_id=${encodeURIComponent(clientRefId)}&prefilled_email=${encodeURIComponent(email)}`;
-
-    return NextResponse.json({ url });
+    return NextResponse.json({ url: session.url });
   } catch (err) {
     console.error("CheckoutPromo error:", err);
     return NextResponse.json(
-      { error: "処理に失敗しました" },
+      { error: "チェックアウトセッションの作成に失敗しました" },
       { status: 500 }
     );
   }

@@ -40,34 +40,18 @@ export async function POST(req: NextRequest) {
     const now = new Date().toISOString();
     const clientRefRaw = session.client_reference_id || "";
 
-    // client_reference_id からメタデータをデコード
-    let promoMeta: {
-      name?: string;
-      email?: string;
-      referral?: string;
-      referralOther?: string;
-      question?: string;
-    } = {};
-    const isGeneralPromo = clientRefRaw.toLowerCase().startsWith("general");
-    if (clientRefRaw.includes(":")) {
-      try {
-        const encoded = clientRefRaw.split(":").slice(1).join(":");
-        const decoded = Buffer.from(encoded, "base64url").toString("utf-8");
-        promoMeta = JSON.parse(decoded);
-      } catch {
-        console.warn("[Webhook] Failed to decode client_reference_id metadata");
-      }
-    }
+    // セミナー判別用フラグ
+    const isGeneralPromo =
+      clientRefRaw.toLowerCase() === "general" ||
+      clientRefRaw.toLowerCase().startsWith("general:");
 
     // name/emailのフォールバック
     const name =
       metadata.name ||
-      promoMeta.name ||
       session.customer_details?.name ||
       "";
     const email =
       metadata.email ||
-      promoMeta.email ||
       session.customer_details?.email ||
       "";
 
@@ -83,7 +67,7 @@ export async function POST(req: NextRequest) {
       seminarType = "promo";
     } else if (isGeneralPromo || clientRefLower === "promo2026") {
       seminarName = "プロモートビジネスセミナー入門編";
-      referralSource = promoMeta.referral || "一般申込";
+      referralSource = metadata.referral || "一般申込";
       seminarType = "promo";
     } else {
       // payment_link IDで判別
@@ -110,9 +94,9 @@ export async function POST(req: NextRequest) {
       email,
       businessType: metadata.businessType || "",
       situation: metadata.situation || "",
-      referral: promoMeta.referral || metadata.referral || referralSource,
-      referralOther: promoMeta.referralOther || metadata.referralOther || "",
-      question: promoMeta.question || metadata.question || "",
+      referral: metadata.referral || referralSource,
+      referralOther: metadata.referralOther || "",
+      question: metadata.question || "",
       paymentStatus: "completed",
       stripeSessionId: session.id,
       appliedAt: now,
