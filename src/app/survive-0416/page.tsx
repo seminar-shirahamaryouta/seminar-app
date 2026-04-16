@@ -1,16 +1,55 @@
+"use client";
+
+import { useState } from "react";
+
+const REFERRAL_SOURCES = [
+  "ハマーのメルマガ・LINE",
+  "いれぶん塾での紹介",
+  "AI Dreamers Productionのメルマガ",
+  "知人・友人からの紹介",
+  "その他",
+];
+
 export default function Survive0416() {
+  const [loading, setLoading] = useState(false);
+  const [selectedReferral, setSelectedReferral] = useState("");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+    const formData = new FormData(e.currentTarget);
+    const referral = formData.get("referral") as string;
+
+    try {
+      const res = await fetch("/api/checkout-survive-0416", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          referral:
+            referral === "その他"
+              ? `その他: ${formData.get("referralOther") as string}`
+              : referral,
+          question: (formData.get("question") as string) || "",
+        }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("エラーが発生しました。もう一度お試しください。");
+        setLoading(false);
+      }
+    } catch {
+      alert("エラーが発生しました。もう一度お試しください。");
+      setLoading(false);
+    }
+  }
+
   return (
     <main className="min-h-screen flex items-center justify-center px-4 py-20">
       <div className="max-w-2xl w-full">
-        {/* 受付終了バナー */}
-        <div className="bg-red-900 text-white text-center py-8 px-6 rounded-sm mb-16">
-          <p className="text-xl md:text-2xl font-medium tracking-wide leading-relaxed">
-            本セミナーは定員に達したため、
-            <br className="md:hidden" />
-            受付を終了しました。
-          </p>
-        </div>
-
         {/* Header */}
         <div className="text-center mb-20">
           <p className="text-xs tracking-[0.3em] text-neutral-500 uppercase mb-6">
@@ -186,12 +225,115 @@ export default function Survive0416() {
           </div>
         </div>
 
-        {/* 受付終了再表示 */}
-        <div className="bg-red-900 text-white text-center py-8 px-6 rounded-sm">
-          <p className="text-xl md:text-2xl font-medium tracking-wide leading-relaxed">
-            本セミナーは定員に達したため、
-            <br className="md:hidden" />
-            受付を終了しました。
+        {/* CTA / Form */}
+        <div className="bg-neutral-900 border border-neutral-800 rounded-sm p-10">
+          <h2 className="text-center text-lg font-light tracking-wide mb-10 text-neutral-200">
+            参加申し込み
+          </h2>
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-xs tracking-wider text-neutral-500 mb-2"
+              >
+                お名前 <span className="text-neutral-600">*</span>
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                className="w-full bg-neutral-950 border border-neutral-800 rounded-sm px-4 py-3 text-sm text-neutral-100 placeholder-neutral-700 focus:outline-none focus:border-neutral-600 transition-colors"
+                placeholder="山田 太郎"
+              />
+              <p className="text-xs text-neutral-600 mt-1.5">
+                ※ビジネスネーム不可。本名でご入力ください。
+              </p>
+            </div>
+
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-xs tracking-wider text-neutral-500 mb-2"
+              >
+                メールアドレス <span className="text-neutral-600">*</span>
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                className="w-full bg-neutral-950 border border-neutral-800 rounded-sm px-4 py-3 text-sm text-neutral-100 placeholder-neutral-700 focus:outline-none focus:border-neutral-600 transition-colors"
+                placeholder="taro@example.com"
+              />
+            </div>
+
+            <fieldset>
+              <legend className="block text-xs tracking-wider text-neutral-500 mb-3">
+                このセミナーをどこでお知りになりましたか？{" "}
+                <span className="text-neutral-600">*</span>
+              </legend>
+              <div className="space-y-2">
+                {REFERRAL_SOURCES.map((option) => (
+                  <label
+                    key={option}
+                    className="flex items-center gap-3 px-4 py-3 border border-neutral-800 rounded-sm cursor-pointer hover:border-neutral-600 has-[:checked]:border-neutral-500 has-[:checked]:bg-neutral-800/50 transition-colors"
+                  >
+                    <input
+                      type="radio"
+                      name="referral"
+                      value={option}
+                      required
+                      onChange={() => setSelectedReferral(option)}
+                      className="appearance-none w-3.5 h-3.5 border border-neutral-600 rounded-full checked:border-white checked:bg-white checked:shadow-[inset_0_0_0_2px_#171717] shrink-0 transition-colors"
+                    />
+                    <span className="text-sm text-neutral-200">{option}</span>
+                  </label>
+                ))}
+              </div>
+              {selectedReferral === "その他" && (
+                <input
+                  type="text"
+                  name="referralOther"
+                  required
+                  className="w-full mt-2 bg-neutral-950 border border-neutral-800 rounded-sm px-4 py-3 text-sm text-neutral-100 placeholder-neutral-700 focus:outline-none focus:border-neutral-600 transition-colors"
+                  placeholder="紹介者名・媒体名などをご記入ください"
+                />
+              )}
+            </fieldset>
+
+            <div>
+              <label
+                htmlFor="question"
+                className="block text-xs tracking-wider text-neutral-500 mb-2"
+              >
+                当日聞きたいこと
+              </label>
+              <textarea
+                id="question"
+                name="question"
+                rows={3}
+                className="w-full bg-neutral-950 border border-neutral-800 rounded-sm px-4 py-3 text-sm text-neutral-100 placeholder-neutral-700 focus:outline-none focus:border-neutral-600 transition-colors resize-none"
+                placeholder="自由にご記入ください"
+              />
+              <p className="text-xs text-neutral-600 mt-1.5">
+                ※すべてのご質問にお答えできない場合があります。
+              </p>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full mt-4 bg-white text-neutral-950 py-4 rounded-sm text-sm font-medium tracking-wider hover:bg-neutral-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+              {loading ? "処理中..." : "申し込む — ¥5,500"}
+            </button>
+          </form>
+
+          <p className="text-xs text-neutral-600 mt-6 text-center">
+            ※4/8にお申し込みいただいた方は、こちらのフォームからではなく
+            <br />
+            info@promote-business.academy までご連絡ください。
           </p>
         </div>
 
