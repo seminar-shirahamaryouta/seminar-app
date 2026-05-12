@@ -67,10 +67,15 @@ export default function Study0513SuccessPage() {
           <h2 className="text-xs tracking-[0.2em] text-neutral-500 uppercase mb-6">
             Notes
           </h2>
-          <ul className="space-y-3 text-sm text-neutral-300">
+          <ul className="space-y-3 text-sm text-neutral-300 leading-relaxed">
             <li>
-              <span className="text-white font-medium">カメラオン必須</span>
-              でのご参加をお願いします。
+              他では話せない内容をお伝えします。
+              <br />
+              ながらではなく、集中した環境で、
+              <span className="text-white font-medium">
+                カメラオンで参加いただける方
+              </span>
+              のみでお願いします。
             </li>
             <li>開始5分前にはご入室ください。</li>
             <li>

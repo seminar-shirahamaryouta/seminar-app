@@ -150,22 +150,24 @@ export default function Study0513() {
           {/* Hikaru video reference */}
           <div className="space-y-3">
             <p>
-              今回の勉強会のテーマに関連して、
-              ヒカルさんが動画の中で触れている箇所があります。
+              イベントには、人気YouTuberのヒカルさんも来てくれていました。
             </p>
             <p>
-              <a
-                href="https://youtu.be/MzAUwTPINEU?si=W0IDiQgk72s2sXEr"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-neutral-100 underline underline-offset-4 decoration-neutral-600 hover:decoration-neutral-300 transition-colors"
-              >
-                参考動画はこちら（1:21:00頃から）
-              </a>
+              どんな規模のイベントだったかは、こちらの動画を見ていただくと参考になります。
             </p>
-            <p className="text-sm text-neutral-400">
-              事前にご視聴いただくと、当日の理解がより深まります。
-            </p>
+            <div className="pt-2 space-y-2">
+              <p className="text-sm text-neutral-400">▼ 該当動画</p>
+              <p>
+                <a
+                  href="https://youtu.be/MzAUwTPINEU?si=s7sd_zFRv2XouTfv&t=4856"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-neutral-100 underline underline-offset-4 decoration-neutral-600 hover:decoration-neutral-300 transition-colors break-all"
+                >
+                  https://youtu.be/MzAUwTPINEU?si=s7sd_zFRv2XouTfv&t=4856
+                </a>
+              </p>
+            </div>
           </div>
         </div>
 
@@ -217,11 +219,12 @@ export default function Study0513() {
               <dt className="text-neutral-500 w-32 shrink-0 mb-1 sm:mb-0">
                 参加条件
               </dt>
-              <dd className="text-neutral-200">
-                <span className="text-white font-medium">カメラオン必須</span>
+              <dd className="text-neutral-200 leading-relaxed">
+                他では話せない内容をお伝えします。
                 <br />
-                <span className="text-neutral-500 text-xs">
-                  ※顔出しいただける環境からご参加ください
+                ながらではなく、集中した環境で、
+                <span className="text-white font-medium">
+                  カメラオンで参加いただける方
                 </span>
               </dd>
             </div>
