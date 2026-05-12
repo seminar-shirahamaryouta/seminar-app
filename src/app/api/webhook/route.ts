@@ -5,6 +5,7 @@ import {
   addAirtableRecord,
   upsertCustomer,
   incrementSeminarCount,
+  findRecordByStripeSessionId,
 } from "@/lib/airtable";
 import { appendToSheet } from "@/lib/google-sheets";
 import {
@@ -36,6 +37,23 @@ export async function POST(req: NextRequest) {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
+
+    // === Idempotency check: skip if this Stripe Session ID already recorded ===
+    let existingRecord = null;
+    try {
+      existingRecord = await findRecordByStripeSessionId(session.id);
+    } catch (err) {
+      console.error(
+        `[Webhook] Idempotency check failed for ${session.id}:`,
+        err
+      );
+      // Fail-open: proceed with processing (consistent with existing Promise.allSettled tolerance)
+    }
+    if (existingRecord) {
+      console.log(`[Webhook] Duplicate webhook event: ${session.id}`);
+      return NextResponse.json({ received: true, duplicate: true });
+    }
+
     const metadata = session.metadata || {};
     const now = new Date().toISOString();
     const clientRefRaw = session.client_reference_id || "";
@@ -61,7 +79,11 @@ export async function POST(req: NextRequest) {
     let referralSource: string;
     let seminarType: SeminarType;
 
-    if (clientRefLower === "survive0416") {
+    if (clientRefLower === "study0513") {
+      seminarName = "5/13特別勉強会";
+      referralSource = metadata.referral || "5/13特別勉強会";
+      seminarType = "study0513";
+    } else if (clientRefLower === "survive0416") {
       seminarName =
         "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー（4/16開催）";
       referralSource = metadata.referral || "";

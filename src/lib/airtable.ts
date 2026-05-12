@@ -209,6 +209,27 @@ export async function incrementSeminarCount(seminarName: string) {
   return updateRes.json();
 }
 
+// --- Stripe Session ID による既存レコード検索（webhook冪等性用） ---
+
+export async function findRecordByStripeSessionId(stripeSessionId: string) {
+  if (!stripeSessionId) return null;
+  const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`;
+  const params = new URLSearchParams({
+    filterByFormula: `{Stripe Session ID} = "${stripeSessionId}"`,
+    maxRecords: "1",
+  });
+  const response = await fetch(`${url}?${params}`, {
+    headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` },
+  });
+  if (!response.ok) {
+    throw new Error(
+      `Airtable findRecordByStripeSessionId error: ${await response.text()}`
+    );
+  }
+  const data = await response.json();
+  return data.records.length > 0 ? data.records[0] : null;
+}
+
 // --- 参加者一覧取得 ---
 
 interface Participant {
