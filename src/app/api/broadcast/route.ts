@@ -225,11 +225,18 @@ export async function POST(req: NextRequest) {
   }
 
   // === 7. Send emails (1 by 1, {name} substitution) ===
+  // The Resend SDK does NOT throw on API errors (rate limit, validation etc.);
+  // it returns { data, error }. Must check result.error explicitly.
+  // 500ms inter-send delay keeps us under Resend's default rate limit (~2 req/s).
   let sent = 0;
   let failed = 0;
   const failures: { email: string; error: string }[] = [];
 
-  for (const r of targets) {
+  for (let i = 0; i < targets.length; i++) {
+    const r = targets[i];
+    if (i > 0) {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    }
     if (!r || !r.email || typeof r.email !== "string") {
       failed++;
       failures.push({
@@ -241,14 +248,22 @@ export async function POST(req: NextRequest) {
     const html = body.bodyHtml.replace(/\{name\}/g, r.name || "");
     const text = body.bodyText?.replace(/\{name\}/g, r.name || "");
     try {
-      await resend.emails.send({
+      const result = await resend.emails.send({
         from: fromAddress,
         to: r.email,
         subject: finalSubject,
         html,
         ...(text ? { text } : {}),
       });
-      sent++;
+      if (result.error) {
+        failed++;
+        failures.push({
+          email: r.email,
+          error: result.error.message || JSON.stringify(result.error),
+        });
+      } else {
+        sent++;
+      }
     } catch (err) {
       failed++;
       failures.push({
