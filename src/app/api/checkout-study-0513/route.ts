@@ -30,6 +30,7 @@ export async function POST(req: NextRequest) {
         },
       ],
       mode: "payment",
+      allow_promotion_codes: true,
       success_url: `${req.nextUrl.origin}/study-0513/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.nextUrl.origin}/study-0513`,
       customer_email: email,
