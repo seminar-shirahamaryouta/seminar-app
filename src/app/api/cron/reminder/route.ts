@@ -5,6 +5,7 @@ import {
   REMINDERS_SURVIVE,
   REMINDERS_PROMO,
   REMINDERS_SURVIVE_0416,
+  REMINDERS_STUDY_0513,
   type SeminarType,
 } from "@/lib/email";
 
@@ -13,12 +14,14 @@ const SEMINAR_NAMES: Record<SeminarType, string> = {
   promo: "プロモートビジネスセミナー入門編",
   survive0416:
     "SURVIVE 2026｜大淘汰時代のポジション再設計セミナー（4/16開催）",
+  study0513: "5/13特別勉強会",
 };
 
 const REMINDERS_MAP: Record<SeminarType, Record<string, string>> = {
   survive: REMINDERS_SURVIVE,
   promo: REMINDERS_PROMO,
   survive0416: REMINDERS_SURVIVE_0416,
+  study0513: REMINDERS_STUDY_0513,
 };
 
 export async function GET(req: NextRequest) {
