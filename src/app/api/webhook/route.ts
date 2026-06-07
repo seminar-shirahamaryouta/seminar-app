@@ -38,6 +38,15 @@ export async function POST(req: NextRequest) {
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
 
+    // === 他プロジェクト判別ガード ===
+    // 同一Stripeアカウントを adp-archive-lp（アーカイブ販売LP）と共有しているため、
+    // そちらの決済イベントもこのエンドポイントに配信される。本アプリでは処理しない。
+    // （2026-06-07: アーカイブ購入がSURVIVE 2026として誤処理された事故の再発防止）
+    if (session.client_reference_id === "adp-archive-0528") {
+      console.log(`[Webhook] Ignored adp-archive-lp session: ${session.id}`);
+      return NextResponse.json({ received: true, ignored: true });
+    }
+
     // === Idempotency check: skip if this Stripe Session ID already recorded ===
     let existingRecord = null;
     try {
